@@ -2,24 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://asphaltbuffet.github.io/</loc>
+    <loc>/</loc>
     <lastmod>2022-06-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://asphaltbuffet.github.io/posts/beginnings/</loc>
+    <loc>/posts/beginnings/</loc>
     <lastmod>2022-06-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://asphaltbuffet.github.io/categories/</loc>
+    <loc>/categories/</loc>
     <lastmod>2022-06-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://asphaltbuffet.github.io/categories/general/</loc>
+    <loc>/categories/general/</loc>
     <lastmod>2022-06-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://asphaltbuffet.github.io/posts/</loc>
+    <loc>/posts/</loc>
     <lastmod>2022-06-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://asphaltbuffet.github.io/about/</loc>
+    <loc>/about/</loc>
     <lastmod>2022-06-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://asphaltbuffet.github.io/tags/</loc>
+    <loc>/tags/</loc>
   </url>
 </urlset>
