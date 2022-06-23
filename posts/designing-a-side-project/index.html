@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <title>Designing a Side Project: Wherehouse :: asphaltbuffet dev blog</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Time for a new project. Design before development; new territory for a non-work effort..." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="/posts/designing-a-side-project/" />
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css">
+
+  <link rel="stylesheet" href="/assets/blue.css">
+
+
+
+
+
+
+<link rel="apple-touch-icon" href="/img/apple-touch-icon-192x192.png">
+
+  <link rel="shortcut icon" href="/img/favicon/blue.png">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+  
+    <meta name="twitter:site" content="" />
+  
+    <meta name="twitter:creator" content="Ben" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Designing a Side Project: Wherehouse">
+<meta property="og:description" content="Time for a new project. Design before development; new territory for a non-work effort..." />
+<meta property="og:url" content="/posts/designing-a-side-project/" />
+<meta property="og:site_name" content="asphaltbuffet dev blog" />
+
+  
+    <meta property="og:image" content="/img/favicon/blue.png">
+  
+
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+  <meta property="article:section" content="projects" />
+
+
+  <meta property="article:published_time" content="2022-06-22 00:04:30 -0400 -0400" />
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body class="blue">
+
+
+<div class="container headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    $HOME
+  </div>
+</a>
+
+    </div>
+    
+      <div class="menu-trigger">menu</div>
+    
+  </div>
+  
+    <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">about</a></li>
+        
+      
+        
+          <li><a href="/categories">categories</a></li>
+        
+      
+        
+          <li><a href="/posts">posts</a></li>
+        
+      
+        
+          <li><a href="/tags">tags</a></li>
+        
+      
+      
+    
+
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">about</a></li>
+      
+    
+      
+        <li><a href="/categories">categories</a></li>
+      
+    
+      
+        <li><a href="/posts">posts</a></li>
+      
+    
+      
+        <li><a href="/tags">tags</a></li>
+      
+    
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<div class="post">
+  <h1 class="post-title">
+    <a href="/posts/designing-a-side-project/">Designing a Side Project: Wherehouse</a></h1>
+  <div class="post-meta">
+    
+      <span class="post-date">
+        2022-06-22
+        
+      </span>
+    
+    
+      <span class="post-author">:: Ben</span>
+    
+    
+      <span class="post-reading-time">:: 4 min read (759 words)</span>
+    
+  </div>
+
+  
+  <span class="post-tags">
+    
+    #<a href="/tags/go/">go</a>&nbsp;
+    
+    #<a href="/tags/design/">design</a>&nbsp;
+    
+    #<a href="/tags/wherehouse/">wherehouse</a>&nbsp;
+    
+  </span>
+  
+  
+
+
+  
+
+  <div class="post-content"><div>
+        <p>Time for a new project.</p>
+<p>The idea of an application that would help me track all my stuff has been rattling around in the
+noggin for quite a while. At one point, I&rsquo;d hoped that maybe I could get Google Assistant to give
+some verbal means to tell me where I put that #2 Phillips screwdriver. A couple days of poking at
+IFTTT later&hellip; idea abandoned.</p>
+<p>But now, it came back (I still don&rsquo;t know where that screwdriver is) and my thought is this would
+be a great way to expand my knowledge/practice of go, and databases, and REST and APIs and&hellip; well,
+there&rsquo;s a lot of things I can poke at here.</p>
+<h2 id="first-steps">First Steps<a href="#first-steps" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>Rather than jumping right into the code, I brought up the old daily journal app (see Obsidian) and
+created a new collection (see Bullet Journaling). For the really wild part, I stopped with code once
+I had the basic core repo set up and building. Did that take half a day? Yes. Did I stop immediately
+without going any further? Mostly. I count this as a huge success though. Figuring out a better name
+after I set up the repo and now I need to do some conversion&hellip; well, it was 90% success at least.</p>
+<h2 id="design">Design<a href="#design" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>So, back in my journal, I created a high-level summary of the project and then a page to start
+listing out my subcommands. It feels a bit like code, but the main benefit is that I&rsquo;m rounding out
+<strong>what</strong> I want this thing to look like when using it. So far, very good results. I have iterated a
+few times on how the command structure looks and had to make some decisions about what kind of
+information I would want to include. There are notes on first deliverable functionality, ideas for
+the future, and it&rsquo;s saving a lot of time.</p>
+<p>An interesting discovery after doing some of this work is that it highlights the usefulness of a
+flowchart or state diagram of some sort. A means to visualize where application flow would happen
+and help define test cases and expectations. It also feeds into user documentation nicely too.</p>
+<h2 id="output">Output<a href="#output" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>Currently, the document looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>date created: Sunday, June 19th, 2022 12:09:41 pm
+</span></span><span style="display:flex;"><span>date modified: Wednesday, June 22nd, 2022 12:53:45 am
+</span></span><span style="display:flex;"><span>title: subcommands
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># subcommands
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>%%TODO: rename ‘name’ to ‘thing’%%
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## `store [name] in [location]`
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> adds item &#39;name&#39; into storage &#39;location&#39;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## `use [name] from [location]`
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> pull item &#39;name&#39; out of storage &#39;location&#39; temporarily and track in ephemeral place while in use.
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Intended to be relevant when calling the &#39;cleanup&#39; subcommand.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## `find [name]`
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> return list of storage locations that contain an item called &#39;name&#39;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## `rename [name]-[id] to [name]`
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> change the name of specific item
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> id would use a unique (but easy to input) identifier in the event multiple things have same name
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> TODO: should each item have a unique name?
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> TODO: should application tell user what the unique name is when they add something to tracking?
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## `cleanup`
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Lists of all items that have been ‘used’ but not <span style="color:#e6db74">`put-away`</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> include storage locations to assist in returning them to right place
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## `put-away [name] (in &lt;location&gt;)`
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> remove item from ephemeral storage
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> adding a different location than previously recorded would be equivalent to &#39;put-away&#39; and &#39;move&#39; commands
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## `move [name] from [location] to [location]`
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> change storage location for that item
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## `remove [name] from [location]`
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> stop tracking specified item
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> TODO: does this permanently delete the item or just flag as removed?
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## `borrow [name] from [person]`
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> add item to a special location for borrowed items
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> TODO: ability to add item to a storage location?
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> TODO: is this something that should be tracked with location like other items but a flag to indicate borrowed?
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## `lend [name] to [person]`
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> take out of storage location (like use)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> set flag that it is now loaned
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> TODO: ability to set return date?
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> TODO: autocomplete people from history?
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> TODO: add contact info for a person?
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## `return [name]`
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> functionally very similar to put away
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> removes borrow/loaned flags
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> TODO: add ability to change location here too?
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## `organize`
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Group items (like with like) and generate report that highlights discrepancies.
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> TODO: may need some metadata to help determine which things are “alike”
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## `places`
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> list out all storage locations
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## `inventory`
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Generate a list of all tracked items, locations, quantities, and status (loaned/borrowed)
+</span></span></code></pre></div>
+      </div></div>
+
+  
+  
+<div class="pagination">
+    <div class="pagination__title">
+        <span class="pagination__title-h">Read other posts</span>
+        <hr />
+    </div>
+    <div class="pagination__buttons">
+        
+        
+        <span class="button next">
+            <a href="/posts/beginnings/">
+                <span class="button__text">Beginnings</span>
+                <span class="button__icon">→</span>
+            </a>
+        </span>
+        
+    </div>
+</div>
+
+  
+
+  
+  
+
+  
+</div>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2022 Powered by <a href="http://gohugo.io">Hugo</a></span>
+    
+        <span>:: Theme made by <a href="https://twitter.com/panr">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

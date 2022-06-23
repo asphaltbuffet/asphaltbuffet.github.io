@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>asphaltbuffet dev blog</title>
-    <link>/</link>
-    <description>Recent content on asphaltbuffet dev blog</description>
+    <title>go on asphaltbuffet dev blog</title>
+    <link>/tags/go/</link>
+    <description>Recent content in go on asphaltbuffet dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Jun 2022 00:04:30 -0400</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 22 Jun 2022 00:04:30 -0400</lastBuildDate><atom:link href="/tags/go/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Designing a Side Project: Wherehouse</title>
       <link>/posts/designing-a-side-project/</link>
@@ -124,52 +124,6 @@ and help define test cases and expectations. It also feeds into user documentati
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;-&lt;/span&gt; Generate a list of all tracked items, locations, quantities, and status (loaned/borrowed)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
-    </item>
-    
-    <item>
-      <title>Beginnings</title>
-      <link>/posts/beginnings/</link>
-      <pubDate>Tue, 21 Jun 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/beginnings/</guid>
-      <description>Beginnings While I’ve blogged before, there is a need to have a common place to put development updates, tricks learned, and simply to show off when I think I’m being particularly clever.
-So exists this place to serve that purpose.</description>
-      <content>&lt;h1 id=&#34;beginnings&#34;&gt;Beginnings&lt;/h1&gt;
-&lt;p&gt;While I’ve blogged before, there is a need to have a common place to put development updates, tricks learned, and simply to show off when I think I’m being particularly clever.&lt;/p&gt;
-&lt;p&gt;So exists this place to serve that purpose.&lt;/p&gt;
-</content>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Mon, 20 Jun 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/about/</guid>
-      <description>tldr; I am Ben, and I make things.
-Software Development GitHub Snapcraft Notable Projects Ogma GitHub: ogma Snapcraft: ogma Go Project Template GitHub: seed Wherehouse GitHub: warehouse </description>
-      <content>&lt;h1 id=&#34;tldr&#34;&gt;tldr;&lt;/h1&gt;
-&lt;p&gt;I am Ben, and I make things.&lt;/p&gt;
-&lt;h2 id=&#34;software-development&#34;&gt;Software Development&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/asphaltbuffet&#34;&gt;GitHub&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://snapcraft.io/search?q=asphaltbuffet&#34;&gt;Snapcraft&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;notable-projects&#34;&gt;Notable Projects&lt;/h2&gt;
-&lt;h3 id=&#34;ogma&#34;&gt;Ogma&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;GitHub: &lt;a href=&#34;https://github.com/asphaltbuffet/ogma&#34;&gt;ogma&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Snapcraft: &lt;a href=&#34;https://snapcraft.io/warehouse&#34;&gt;ogma&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;go-project-template&#34;&gt;Go Project Template&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;GitHub: &lt;a href=&#34;https://github.com/asphaltbuffet/seed&#34;&gt;seed&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;wherehouse&#34;&gt;Wherehouse&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;GitHub: &lt;a href=&#34;https://github.com/asphaltbuffet/warehouse&#34;&gt;warehouse&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content>
     </item>
     
   </channel>
