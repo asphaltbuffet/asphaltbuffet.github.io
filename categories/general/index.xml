@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>general on asphaltbuffet dev blog</title>
+    <link>https://asphaltbuffet.github.io/categories/general/</link>
+    <description>Recent content in general on asphaltbuffet dev blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 21 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://asphaltbuffet.github.io/categories/general/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Beginnings</title>
+      <link>https://asphaltbuffet.github.io/posts/beginnings/</link>
+      <pubDate>Tue, 21 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://asphaltbuffet.github.io/posts/beginnings/</guid>
+      <description>Beginnings While I’ve blogged before, there is a need to have a common place to put development updates, tricks learned, and simply to show off when I think I’m being particularly clever.
+So exists this place to serve that purpose.</description>
+    </item>
+    
+  </channel>
+</rss>
