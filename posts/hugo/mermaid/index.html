@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <title>Mermaid &#43; Hugo :: asphaltbuffet dev blog</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="I learned about Mermaid in 2021 while trying to find a way to better see changes in diagrams at work. Being able to look through a revision history of images was tolerable, but only slightly better than the proverbial needle and the unexplained presense of a nearby haystack.
+But Mermaid resolves my complaints by rendering text/code into fairly nice-looking diagrams and visualizations. Some are too plain for my liking (looking at you state diagram), but they convey information graphically." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="/posts/hugo/mermaid/" />
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css">
+
+  <link rel="stylesheet" href="/assets/blue.css">
+
+
+
+
+
+
+<link rel="apple-touch-icon" href="/img/apple-touch-icon-192x192.png">
+
+  <link rel="shortcut icon" href="/img/favicon/blue.png">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+  
+    <meta name="twitter:site" content="" />
+  
+    <meta name="twitter:creator" content="Ben" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Mermaid &#43; Hugo">
+<meta property="og:description" content="I learned about Mermaid in 2021 while trying to find a way to better see changes in diagrams at work. Being able to look through a revision history of images was tolerable, but only slightly better than the proverbial needle and the unexplained presense of a nearby haystack.
+But Mermaid resolves my complaints by rendering text/code into fairly nice-looking diagrams and visualizations. Some are too plain for my liking (looking at you state diagram), but they convey information graphically." />
+<meta property="og:url" content="/posts/hugo/mermaid/" />
+<meta property="og:site_name" content="asphaltbuffet dev blog" />
+
+  
+    <meta property="og:image" content="/img/favicon/blue.png">
+  
+
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+  <meta property="article:section" content="hugo" />
+
+
+  <meta property="article:published_time" content="2022-06-23 20:16:28 -0400 -0400" />
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body class="blue">
+
+
+<div class="container headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    $HOME
+  </div>
+</a>
+
+    </div>
+    
+      <div class="menu-trigger">menu</div>
+    
+  </div>
+  
+    <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">about</a></li>
+        
+      
+        
+          <li><a href="/categories">categories</a></li>
+        
+      
+        
+          <li><a href="/posts">posts</a></li>
+        
+      
+        
+          <li><a href="/tags">tags</a></li>
+        
+      
+      
+    
+
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">about</a></li>
+      
+    
+      
+        <li><a href="/categories">categories</a></li>
+      
+    
+      
+        <li><a href="/posts">posts</a></li>
+      
+    
+      
+        <li><a href="/tags">tags</a></li>
+      
+    
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<div class="post">
+  <h1 class="post-title">
+    <a href="/posts/hugo/mermaid/">Mermaid + Hugo</a></h1>
+  <div class="post-meta">
+    
+      <span class="post-date">
+        2022-06-23
+        
+          [Updated: 2022-06-23]
+        
+      </span>
+    
+    
+      <span class="post-author">:: Ben</span>
+    
+    
+      <span class="post-reading-time">:: 5 min read (869 words)</span>
+    
+  </div>
+
+  
+  <span class="post-tags">
+    
+    #<a href="/tags/mermaid/">mermaid</a>&nbsp;
+    
+    #<a href="/tags/scripts/">scripts</a>&nbsp;
+    
+    #<a href="/tags/tools/">tools</a>&nbsp;
+    
+  </span>
+  
+  
+
+
+  
+
+  <div class="post-content"><div>
+        <p>I learned about <a href="http://mermaid-js.github.io/mermaid/">Mermaid</a> in 2021 while trying to find a way to better see changes in diagrams at work. Being able to look through a revision history of images was tolerable, but only slightly better than the proverbial needle and the unexplained presense of a nearby haystack.</p>
+<p>But Mermaid resolves my complaints by rendering text/code into fairly nice-looking diagrams and visualizations. Some are too plain for my liking (looking at you state diagram), but they convey information graphically. That&rsquo;s all I&rsquo;m really looking to get here.</p>
+<p><a href="mermaid.md#tldr">tldr;</a></p>
+<h1 id="complicating-it-all-lets-make-a-website">Complicating It All; Let&rsquo;s Make a Website<a href="#complicating-it-all-lets-make-a-website" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>Mermaid files are just fine when they&rsquo;re used in a README (GitHub supports Mermaid already in its markdown) or project documentation. If I want to also post them on here, we have a problem.</p>
+
+
+
+  <div class="collapsable-code">
+    <input id="391764852" type="checkbox"  />
+    <label for="391764852">
+      <span class="collapsable-code__language">markdown</span>
+      <span class="collapsable-code__title">I want this to be pretty</span>
+      <span class="collapsable-code__toggle" data-label-expand="show" data-label-collapse="hide"></span>
+    </label>
+    <pre class="language-markdown" ><code>
+```mermaid
+graph TD
+    A[Christmas] --&gt;|Get money| B(Go shopping)
+    B --&gt; C{Let me think}
+    C --&gt; D[Laptop]
+    C --&gt; |Bleh| E[iPhone]
+    C --&gt; F[Car]
+```
+</code></pre>
+  </div>
+
+
+<p>Ok, an inconvenience at the least. Hugo doesn&rsquo;t know about Mermaid. Not in the slightest. I guess it&rsquo;s time to figure out how to get that working.</p>
+<h2 id="adding-mermaid-to-hugo">Adding Mermaid to Hugo<a href="#adding-mermaid-to-hugo" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>One option is to change my theme to something that has Mermaid built-in. <a href="https://www.docsy.dev/">Docsy</a> is an example of this, but that isn&rsquo;t something I want to consider for the site right now. I could also compile the image with Mermaid&rsquo;s live editor (or use their CLI locally), but again, the intent is to keep everything together. Cats and dogs; living together.</p>
+<p>What I really want is a shortcode like <code>{{&lt; code [...] &gt;}}</code> that will let me do it inline. Following the directions from <a href="https://satoru.dev/2020/08/using-mermaid-in-hugo/">satoru.dev</a>, I expected that I&rsquo;d found the perfect example and implementation. Nope. Does nothing.</p>
+<p>I checked to make sure I had spelled things correctly, placed them in the right place&hellip; Oh. Reading the article again, I see that I needed to put the shortcode in <code>layouts/shortcodes/mermaid.html</code>, but where the site had said,</p>
+<blockquote>
+<p>Find somewhere in your theme that&rsquo;s suitable for adding a <!-- raw HTML omitted --> [&hellip;]</p>
+</blockquote>
+<p>I had not really done the &lsquo;suitable&rsquo; part of it &ndash; and would continue to fail at this part. Clues on the <a href="https://discourse.gohugo.io/t/javascript-on-page/4166/4">Hugo Discourse</a>, <a href="https://gohugo.io/templates/shortcode-templates/">RTFM</a>, <a href="https://github.com/panr/hugo-theme-terminal">RTF(Theme)M</a>, and investigation of the <code>layouts/partial/extended_footer.html</code> file got me a bit closer. Nope. RTFM again and look at <a href="https://github.com/matcornic/hugo-theme-learn/">example theme</a> with Mermaid included&hellip; and a little bit at the end of Alexandra Souly&rsquo;s <a href="https://towardsdatascience.com/mermaid-create-diagrams-quickly-and-effortlessly-d236e23d6d58">article</a>.</p>
+<p>I am convinced at this point that I have fully grokked the situation. I am a god amongst men (actually, no, my self-esteem would never get there&hellip;). Update. Refresh.</p>
+<p>Frak.</p>
+<p>Time to look at raw page source. Hmm, there isn&rsquo;t one iota of reference to the mermaid.min.js script. Time for an equivalant form of print statement debugging. Adding <code>&lt;meta property=&quot;TESTING&quot; content=&quot;TESTING&quot; /&gt;</code> right after the script should do the trick. And its absence is deafening. Some debugging, some tea, and a last ditch effort to look for any bugs in the theme that would cause this and I see it.</p>
+<p>I want you to know that I could have deleted all of this. I <strong>could</strong> have. Do you remember that foreshadowing about failing to find a suitable place for things.</p>
+
+
+
+  <div class="collapsable-code">
+    <input id="716543298" type="checkbox"  />
+    <label for="716543298">
+      <span class="collapsable-code__language">zsh</span>
+      <span class="collapsable-code__title">mistakes were made</span>
+      <span class="collapsable-code__toggle" data-label-expand="show" data-label-collapse="hide"></span>
+    </label>
+    <pre class="language-zsh" ><code>
+2022-06-24 00:38:05 EDT in blog on  main [⇡!?]
+➜ tree layouts
+layouts
+└── shortcodes
+    ├── mermaid.html
+    └── partials
+        ├── comments.html
+        └── extended_footer.html
+</code></pre>
+  </div>
+
+
+<p>Yes, I failed to pay attention and created <code>layouts/shortcodes/partials</code> instead of <code>layouts/partials</code>. The first resource was correct and I have it working.</p>
+<div class="mermaid" style="text-align: center">
+    
+graph TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C --> D[Laptop]
+    C --> |Bleh| E[iPhone]
+    C --> F[Car]
+
+</div>
+<p>That&rsquo;s great. Seriously. I&rsquo;m happy now and tired and a little thirsty. This should take the typical person a few minutes to get this working.</p>
+<h2 id="tldr">tldr;<a href="#tldr" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>First, create a shortcode in <code>layouts/shortcodes/mermaid.html</code>. I added some extra sugar here so that I can center it and make it look <em>just</em> right.</p>
+
+
+
+  <div class="collapsable-code">
+    <input id="183967245" type="checkbox"  />
+    <label for="183967245">
+      <span class="collapsable-code__language">html</span>
+      <span class="collapsable-code__title">mermaid.html</span>
+      <span class="collapsable-code__toggle" data-label-expand="show" data-label-collapse="hide"></span>
+    </label>
+    <pre class="language-html" ><code>
+&lt;div class=&#34;mermaid&#34; style=&#34;text-align: {{ .Get 0 }}&#34;&gt;
+    {{.Inner}}
+&lt;/div&gt;
+</code></pre>
+  </div>
+
+
+<p>Then update <code>layouts/partials/extended_footer.html</code> to call the script that will look for the mermaid class and render it. If the file doesn&rsquo;t already exist, you can create it or copy the example from <code>themes/layouts/partials/extended_footer.html</code> (which is a file that only contains a comment saying that you should create the file).</p>
+
+
+
+  <div class="collapsable-code">
+    <input id="639724815" type="checkbox"  />
+    <label for="639724815">
+      <span class="collapsable-code__language">html</span>
+      <span class="collapsable-code__title">extended_footer.html</span>
+      <span class="collapsable-code__toggle" data-label-expand="show" data-label-collapse="hide"></span>
+    </label>
+    <pre class="language-html" ><code>
+{{ if (.Params.mermaid) }}
+ &lt;!-- MermaidJS support --&gt;
+ &lt;script async src=&#34;https://unpkg.com/mermaid/dist/mermaid.min.js&#34;&gt;&lt;/script&gt;
+{{ end }}
+</code></pre>
+  </div>
+
+
+<p>This is wrapped in a check for frontmatter on the page that lets you choose which pages get that loaded. Generally a good idea to only load on pages that need it. Saves a bit of loading time and data transfer. We&rsquo;re doing this all to have a zippy site, right? So the last setup bit is to update the page frontmatter.</p>
+
+
+
+  <div class="collapsable-code">
+    <input id="156943278" type="checkbox"  />
+    <label for="156943278">
+      <span class="collapsable-code__language">yaml</span>
+      <span class="collapsable-code__title">frontmatter</span>
+      <span class="collapsable-code__toggle" data-label-expand="show" data-label-collapse="hide"></span>
+    </label>
+    <pre class="language-yaml" ><code>
+title: &#34;Mermaid &#43; Hugo&#34;
+author: &#34;Ben&#34;
+tags:
+  - mermaid
+mermaid: true
+</code></pre>
+  </div>
+
+
+<p>That&rsquo;s it. You can use it as so:</p>
+
+
+
+  <div class="collapsable-code">
+    <input id="584739612" type="checkbox"  />
+    <label for="584739612">
+      <span class="collapsable-code__language">markdown</span>
+      <span class="collapsable-code__title">example shortcode</span>
+      <span class="collapsable-code__toggle" data-label-expand="show" data-label-collapse="hide"></span>
+    </label>
+    <pre class="language-markdown" ><code>
+{{&lt; mermaid center &gt;}}
+graph TD
+    A[Christmas] --&gt;|Get money| B(Go shopping)
+    B --&gt; C{Let me think}
+    C --&gt; D[Laptop]
+    C --&gt; |Bleh| E[iPhone]
+    C --&gt; F[Car]
+{{&lt; /mermaid &gt;}}
+</code></pre>
+  </div>
+
+
+
+
+
+  <div class="collapsable-code">
+    <input id="723514968" type="checkbox"  />
+    <label for="723514968">
+      <span class="collapsable-code__language">html</span>
+      <span class="collapsable-code__title">example output</span>
+      <span class="collapsable-code__toggle" data-label-expand="show" data-label-collapse="hide"></span>
+    </label>
+    <pre class="language-html" ><code>
+&lt;div class=&#34;mermaid&#34; style=&#34;text-align: center&#34;&gt;
+    
+graph TD
+    A[Christmas] --&gt;|Get money| B(Go shopping)
+    B --&gt; C{Let me think}
+    C --&gt; D[Laptop]
+    C --&gt; |Bleh| E[iPhone]
+    C --&gt; F[Car]
+
+&lt;/div&gt;
+</code></pre>
+  </div>
+
+
+
+      </div></div>
+
+  
+  
+<div class="pagination">
+    <div class="pagination__title">
+        <span class="pagination__title-h">Read other posts</span>
+        <hr />
+    </div>
+    <div class="pagination__buttons">
+        
+        
+        <span class="button next">
+            <a href="/posts/projects/designing-a-side-project/">
+                <span class="button__text">Designing a Side Project: Wherehouse</span>
+                <span class="button__icon">→</span>
+            </a>
+        </span>
+        
+    </div>
+</div>
+
+  
+
+  
+  
+
+  
+</div>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2022 Powered by <a href="http://gohugo.io">Hugo</a></span>
+    
+        <span>:: Theme made by <a href="https://twitter.com/panr">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+
+
+
+ 
+ <script async src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+
+
+
+  
+</div>
+
+</body>
+</html>

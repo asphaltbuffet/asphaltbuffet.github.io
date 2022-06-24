@@ -6,7 +6,17 @@
     <description>Recent content in Categories on asphaltbuffet dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Jun 2022 00:04:30 -0400</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 23 Jun 2022 20:16:28 -0400</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>hugo</title>
+      <link>/categories/hugo/</link>
+      <pubDate>Thu, 23 Jun 2022 20:16:28 -0400</pubDate>
+      
+      <guid>/categories/hugo/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
     <item>
       <title>projects</title>
       <link>/categories/projects/</link>
