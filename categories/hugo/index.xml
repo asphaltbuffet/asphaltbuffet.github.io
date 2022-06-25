@@ -24,8 +24,8 @@ But Mermaid resolves my complaints by rendering text/code into fairly nice-looki
 
 
   &lt;div class=&#34;collapsable-code&#34;&gt;
-    &lt;input id=&#34;391764852&#34; type=&#34;checkbox&#34;  /&gt;
-    &lt;label for=&#34;391764852&#34;&gt;
+    &lt;input id=&#34;365792148&#34; type=&#34;checkbox&#34;  /&gt;
+    &lt;label for=&#34;365792148&#34;&gt;
       &lt;span class=&#34;collapsable-code__language&#34;&gt;markdown&lt;/span&gt;
       &lt;span class=&#34;collapsable-code__title&#34;&gt;I want this to be pretty&lt;/span&gt;
       &lt;span class=&#34;collapsable-code__toggle&#34; data-label-expand=&#34;show&#34; data-label-collapse=&#34;hide&#34;&gt;&lt;/span&gt;
@@ -60,8 +60,8 @@ graph TD
 
 
   &lt;div class=&#34;collapsable-code&#34;&gt;
-    &lt;input id=&#34;716543298&#34; type=&#34;checkbox&#34;  /&gt;
-    &lt;label for=&#34;716543298&#34;&gt;
+    &lt;input id=&#34;718246359&#34; type=&#34;checkbox&#34;  /&gt;
+    &lt;label for=&#34;718246359&#34;&gt;
       &lt;span class=&#34;collapsable-code__language&#34;&gt;zsh&lt;/span&gt;
       &lt;span class=&#34;collapsable-code__title&#34;&gt;mistakes were made&lt;/span&gt;
       &lt;span class=&#34;collapsable-code__toggle&#34; data-label-expand=&#34;show&#34; data-label-collapse=&#34;hide&#34;&gt;&lt;/span&gt;
@@ -97,8 +97,8 @@ graph TD
 
 
   &lt;div class=&#34;collapsable-code&#34;&gt;
-    &lt;input id=&#34;183967245&#34; type=&#34;checkbox&#34;  /&gt;
-    &lt;label for=&#34;183967245&#34;&gt;
+    &lt;input id=&#34;718963245&#34; type=&#34;checkbox&#34;  /&gt;
+    &lt;label for=&#34;718963245&#34;&gt;
       &lt;span class=&#34;collapsable-code__language&#34;&gt;html&lt;/span&gt;
       &lt;span class=&#34;collapsable-code__title&#34;&gt;mermaid.html&lt;/span&gt;
       &lt;span class=&#34;collapsable-code__toggle&#34; data-label-expand=&#34;show&#34; data-label-collapse=&#34;hide&#34;&gt;&lt;/span&gt;
@@ -116,8 +116,8 @@ graph TD
 
 
   &lt;div class=&#34;collapsable-code&#34;&gt;
-    &lt;input id=&#34;639724815&#34; type=&#34;checkbox&#34;  /&gt;
-    &lt;label for=&#34;639724815&#34;&gt;
+    &lt;input id=&#34;158427639&#34; type=&#34;checkbox&#34;  /&gt;
+    &lt;label for=&#34;158427639&#34;&gt;
       &lt;span class=&#34;collapsable-code__language&#34;&gt;html&lt;/span&gt;
       &lt;span class=&#34;collapsable-code__title&#34;&gt;extended_footer.html&lt;/span&gt;
       &lt;span class=&#34;collapsable-code__toggle&#34; data-label-expand=&#34;show&#34; data-label-collapse=&#34;hide&#34;&gt;&lt;/span&gt;
@@ -136,8 +136,8 @@ graph TD
 
 
   &lt;div class=&#34;collapsable-code&#34;&gt;
-    &lt;input id=&#34;156943278&#34; type=&#34;checkbox&#34;  /&gt;
-    &lt;label for=&#34;156943278&#34;&gt;
+    &lt;input id=&#34;823194675&#34; type=&#34;checkbox&#34;  /&gt;
+    &lt;label for=&#34;823194675&#34;&gt;
       &lt;span class=&#34;collapsable-code__language&#34;&gt;yaml&lt;/span&gt;
       &lt;span class=&#34;collapsable-code__title&#34;&gt;frontmatter&lt;/span&gt;
       &lt;span class=&#34;collapsable-code__toggle&#34; data-label-expand=&#34;show&#34; data-label-collapse=&#34;hide&#34;&gt;&lt;/span&gt;
@@ -157,8 +157,8 @@ mermaid: true
 
 
   &lt;div class=&#34;collapsable-code&#34;&gt;
-    &lt;input id=&#34;584739612&#34; type=&#34;checkbox&#34;  /&gt;
-    &lt;label for=&#34;584739612&#34;&gt;
+    &lt;input id=&#34;732145689&#34; type=&#34;checkbox&#34;  /&gt;
+    &lt;label for=&#34;732145689&#34;&gt;
       &lt;span class=&#34;collapsable-code__language&#34;&gt;markdown&lt;/span&gt;
       &lt;span class=&#34;collapsable-code__title&#34;&gt;example shortcode&lt;/span&gt;
       &lt;span class=&#34;collapsable-code__toggle&#34; data-label-expand=&#34;show&#34; data-label-collapse=&#34;hide&#34;&gt;&lt;/span&gt;
@@ -180,8 +180,8 @@ graph TD
 
 
   &lt;div class=&#34;collapsable-code&#34;&gt;
-    &lt;input id=&#34;723514968&#34; type=&#34;checkbox&#34;  /&gt;
-    &lt;label for=&#34;723514968&#34;&gt;
+    &lt;input id=&#34;318562497&#34; type=&#34;checkbox&#34;  /&gt;
+    &lt;label for=&#34;318562497&#34;&gt;
       &lt;span class=&#34;collapsable-code__language&#34;&gt;html&lt;/span&gt;
       &lt;span class=&#34;collapsable-code__title&#34;&gt;example output&lt;/span&gt;
       &lt;span class=&#34;collapsable-code__toggle&#34; data-label-expand=&#34;show&#34; data-label-collapse=&#34;hide&#34;&gt;&lt;/span&gt;
