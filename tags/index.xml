@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on asphaltbuffet dev blog</title>
     <link>/tags/</link>
     <description>Recent content in Tags on asphaltbuffet dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
     <lastBuildDate>Thu, 23 Jun 2022 20:16:28 -0400</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>mermaid</title>
@@ -14,7 +13,6 @@
       
       <guid>/tags/mermaid/</guid>
       <description></description>
-      <content></content>
     </item>
     
     <item>
@@ -24,7 +22,6 @@
       
       <guid>/tags/scripts/</guid>
       <description></description>
-      <content></content>
     </item>
     
     <item>
@@ -34,7 +31,6 @@
       
       <guid>/tags/tools/</guid>
       <description></description>
-      <content></content>
     </item>
     
     <item>
@@ -44,7 +40,6 @@
       
       <guid>/tags/design/</guid>
       <description></description>
-      <content></content>
     </item>
     
     <item>
@@ -54,7 +49,6 @@
       
       <guid>/tags/go/</guid>
       <description></description>
-      <content></content>
     </item>
     
     <item>
@@ -64,7 +58,6 @@
       
       <guid>/tags/wherehouse/</guid>
       <description></description>
-      <content></content>
     </item>
     
   </channel>
