@@ -2,58 +2,64 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/</loc>
-    <lastmod>2022-06-27T01:09:48-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/</loc>
+    <lastmod>2022-06-28T18:12:06-04:00</lastmod>
   </url><url>
-    <loc>/categories/</loc>
-    <lastmod>2022-06-27T01:09:48-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/tags/hugo/</loc>
+    <lastmod>2022-06-28T18:12:06-04:00</lastmod>
   </url><url>
-    <loc>/categories/hugo/</loc>
-    <lastmod>2022-06-27T01:09:48-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/tags/mermaid/</loc>
+    <lastmod>2022-06-28T18:12:06-04:00</lastmod>
   </url><url>
-    <loc>/tags/mermaid/</loc>
-    <lastmod>2022-06-27T01:09:48-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/posts/2022/06/mermaid-hugo/</loc>
+    <lastmod>2022-06-28T18:12:06-04:00</lastmod>
   </url><url>
-    <loc>/posts/hugo/mermaid/</loc>
-    <lastmod>2022-06-27T01:09:48-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/posts/</loc>
+    <lastmod>2022-06-28T18:12:06-04:00</lastmod>
   </url><url>
-    <loc>/posts/</loc>
-    <lastmod>2022-06-27T01:09:48-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/tags/</loc>
+    <lastmod>2022-06-28T18:12:06-04:00</lastmod>
   </url><url>
-    <loc>/tags/scripts/</loc>
-    <lastmod>2022-06-27T01:09:48-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/tags/tools/</loc>
+    <lastmod>2022-06-28T18:12:06-04:00</lastmod>
   </url><url>
-    <loc>/tags/</loc>
-    <lastmod>2022-06-27T01:09:48-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/categories/</loc>
+    <lastmod>2022-06-28T18:09:48-04:00</lastmod>
   </url><url>
-    <loc>/tags/tools/</loc>
-    <lastmod>2022-06-27T01:09:48-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/tags/design/</loc>
+    <lastmod>2022-06-28T18:09:48-04:00</lastmod>
   </url><url>
-    <loc>/tags/design/</loc>
-    <lastmod>2022-06-27T00:43:06-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/posts/2022/06/designing-a-side-project/</loc>
+    <lastmod>2022-06-28T18:09:48-04:00</lastmod>
   </url><url>
-    <loc>/posts/projects/designing-a-side-project/</loc>
-    <lastmod>2022-06-27T00:43:06-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/tags/go/</loc>
+    <lastmod>2022-06-28T18:09:48-04:00</lastmod>
   </url><url>
-    <loc>/tags/go/</loc>
-    <lastmod>2022-06-27T00:43:06-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/categories/projects/</loc>
+    <lastmod>2022-06-28T18:09:48-04:00</lastmod>
   </url><url>
-    <loc>/categories/projects/</loc>
-    <lastmod>2022-06-27T00:43:06-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/posts/2022/06/beginnings/</loc>
+    <lastmod>2022-06-28T18:09:48-04:00</lastmod>
   </url><url>
-    <loc>/tags/wherehouse/</loc>
-    <lastmod>2022-06-27T00:43:06-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/tags/blog/</loc>
+    <lastmod>2022-06-28T18:09:48-04:00</lastmod>
   </url><url>
-    <loc>/posts/beginnings/</loc>
-    <lastmod>2022-06-22T21:24:38-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/tags/general/</loc>
+    <lastmod>2022-06-28T18:09:48-04:00</lastmod>
   </url><url>
-    <loc>/categories/general/</loc>
-    <lastmod>2022-06-22T21:24:38-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/about/</loc>
+    <lastmod>2022-06-28T18:11:33-04:00</lastmod>
   </url><url>
-    <loc>/about/</loc>
-    <lastmod>2022-06-27T01:10:10-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/archive/</loc>
+    <lastmod>2022-06-28T18:11:12-04:00</lastmod>
   </url><url>
-    <loc>/archives/</loc>
-    <lastmod>2022-06-27T01:50:18-04:00</lastmod>
+    <loc>https://asphaltbuffet.com/projects/dev-blog/</loc>
+    <lastmod>2022-06-28T18:09:48-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/projects/</loc>
+    <lastmod>2022-06-28T18:09:48-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/projects/wherehouse/</loc>
+    <lastmod>2022-06-28T18:09:48-04:00</lastmod>
   </url>
 </urlset>

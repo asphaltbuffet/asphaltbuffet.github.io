@@ -2,61 +2,70 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on asphaltbuffet dev blog</title>
-    <link>/tags/</link>
+    <link>https://asphaltbuffet.com/tags/</link>
     <description>Recent content in Tags on asphaltbuffet dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 23 Jun 2022 20:16:28 -0400</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 23 Jun 2022 20:16:28 -0400</lastBuildDate><atom:link href="https://asphaltbuffet.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>mermaid</title>
-      <link>/tags/mermaid/</link>
+      <title>hugo</title>
+      <link>https://asphaltbuffet.com/tags/hugo/</link>
       <pubDate>Thu, 23 Jun 2022 20:16:28 -0400</pubDate>
       
-      <guid>/tags/mermaid/</guid>
+      <guid>https://asphaltbuffet.com/tags/hugo/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>scripts</title>
-      <link>/tags/scripts/</link>
+      <title>mermaid</title>
+      <link>https://asphaltbuffet.com/tags/mermaid/</link>
       <pubDate>Thu, 23 Jun 2022 20:16:28 -0400</pubDate>
       
-      <guid>/tags/scripts/</guid>
+      <guid>https://asphaltbuffet.com/tags/mermaid/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tools</title>
-      <link>/tags/tools/</link>
+      <link>https://asphaltbuffet.com/tags/tools/</link>
       <pubDate>Thu, 23 Jun 2022 20:16:28 -0400</pubDate>
       
-      <guid>/tags/tools/</guid>
+      <guid>https://asphaltbuffet.com/tags/tools/</guid>
       <description></description>
     </item>
     
     <item>
       <title>design</title>
-      <link>/tags/design/</link>
+      <link>https://asphaltbuffet.com/tags/design/</link>
       <pubDate>Wed, 22 Jun 2022 00:04:30 -0400</pubDate>
       
-      <guid>/tags/design/</guid>
+      <guid>https://asphaltbuffet.com/tags/design/</guid>
       <description></description>
     </item>
     
     <item>
       <title>go</title>
-      <link>/tags/go/</link>
+      <link>https://asphaltbuffet.com/tags/go/</link>
       <pubDate>Wed, 22 Jun 2022 00:04:30 -0400</pubDate>
       
-      <guid>/tags/go/</guid>
+      <guid>https://asphaltbuffet.com/tags/go/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>wherehouse</title>
-      <link>/tags/wherehouse/</link>
-      <pubDate>Wed, 22 Jun 2022 00:04:30 -0400</pubDate>
+      <title>blog</title>
+      <link>https://asphaltbuffet.com/tags/blog/</link>
+      <pubDate>Tue, 21 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>/tags/wherehouse/</guid>
+      <guid>https://asphaltbuffet.com/tags/blog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>general</title>
+      <link>https://asphaltbuffet.com/tags/general/</link>
+      <pubDate>Tue, 21 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://asphaltbuffet.com/tags/general/</guid>
       <description></description>
     </item>
     
