@@ -6,12 +6,39 @@
     <description>Recent content in projects on asphaltbuffet dev blog</description>
     <generator>Hugo -- gohugo.io</generator><atom:link href="https://asphaltbuffet.com/projects/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>dev blog</title>
+      <title>dev-blog</title>
       <link>https://asphaltbuffet.com/projects/dev-blog/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://asphaltbuffet.com/projects/dev-blog/</guid>
-      <description></description>
+      <description>asphaltbuffet development blog</description>
+    </item>
+    
+    <item>
+      <title>go-status-gif</title>
+      <link>https://asphaltbuffet.com/projects/go-status-gif/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://asphaltbuffet.com/projects/go-status-gif/</guid>
+      <description>A go application that creates animaged gif files for demonstrating status LED behavior.</description>
+    </item>
+    
+    <item>
+      <title>linux-setup</title>
+      <link>https://asphaltbuffet.com/projects/linux-setup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://asphaltbuffet.com/projects/linux-setup/</guid>
+      <description>Reminder and links to duplicate my setup on multiple machines.</description>
+    </item>
+    
+    <item>
+      <title>ogma</title>
+      <link>https://asphaltbuffet.com/projects/ogma/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://asphaltbuffet.com/projects/ogma/</guid>
+      <description>A letter tracking application related to The Letter Exchange (LEX).</description>
     </item>
     
     <item>

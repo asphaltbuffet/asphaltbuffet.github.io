@@ -3,7 +3,31 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://asphaltbuffet.com/</loc>
-    <lastmod>2022-06-28T18:12:06-04:00</lastmod>
+    <lastmod>2022-07-03T23:25:50-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/tags/bujo/</loc>
+    <lastmod>2022-07-03T23:25:50-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/tags/configuration/</loc>
+    <lastmod>2022-07-03T23:25:50-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/tags/journal/</loc>
+    <lastmod>2022-07-03T23:25:50-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/tags/markdown/</loc>
+    <lastmod>2022-07-03T23:25:50-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/tags/obsidian/</loc>
+    <lastmod>2022-07-03T23:25:50-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/posts/2022/07/obsidian-setup/</loc>
+    <lastmod>2022-07-03T23:25:50-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/posts/</loc>
+    <lastmod>2022-07-03T23:25:50-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/tags/</loc>
+    <lastmod>2022-07-03T23:25:50-04:00</lastmod>
   </url><url>
     <loc>https://asphaltbuffet.com/tags/hugo/</loc>
     <lastmod>2022-06-28T18:12:06-04:00</lastmod>
@@ -12,12 +36,6 @@
     <lastmod>2022-06-28T18:12:06-04:00</lastmod>
   </url><url>
     <loc>https://asphaltbuffet.com/posts/2022/06/mermaid-hugo/</loc>
-    <lastmod>2022-06-28T18:12:06-04:00</lastmod>
-  </url><url>
-    <loc>https://asphaltbuffet.com/posts/</loc>
-    <lastmod>2022-06-28T18:12:06-04:00</lastmod>
-  </url><url>
-    <loc>https://asphaltbuffet.com/tags/</loc>
     <lastmod>2022-06-28T18:12:06-04:00</lastmod>
   </url><url>
     <loc>https://asphaltbuffet.com/tags/tools/</loc>
@@ -48,18 +66,27 @@
     <lastmod>2022-06-28T18:09:48-04:00</lastmod>
   </url><url>
     <loc>https://asphaltbuffet.com/about/</loc>
-    <lastmod>2022-06-28T18:11:33-04:00</lastmod>
+    <lastmod>2022-07-03T23:20:33-04:00</lastmod>
   </url><url>
     <loc>https://asphaltbuffet.com/archive/</loc>
-    <lastmod>2022-06-28T18:11:12-04:00</lastmod>
+    <lastmod>2022-06-28T18:57:08-04:00</lastmod>
   </url><url>
     <loc>https://asphaltbuffet.com/projects/dev-blog/</loc>
-    <lastmod>2022-06-28T18:09:48-04:00</lastmod>
+    <lastmod>2022-07-03T11:23:44-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/projects/go-status-gif/</loc>
+    <lastmod>2022-07-03T11:23:44-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/projects/linux-setup/</loc>
+    <lastmod>2022-07-03T11:23:44-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/projects/ogma/</loc>
+    <lastmod>2022-07-03T11:23:44-04:00</lastmod>
   </url><url>
     <loc>https://asphaltbuffet.com/projects/</loc>
-    <lastmod>2022-06-28T18:09:48-04:00</lastmod>
+    <lastmod>2022-07-03T11:23:44-04:00</lastmod>
   </url><url>
     <loc>https://asphaltbuffet.com/projects/wherehouse/</loc>
-    <lastmod>2022-06-28T18:09:48-04:00</lastmod>
+    <lastmod>2022-07-03T11:23:44-04:00</lastmod>
   </url>
 </urlset>

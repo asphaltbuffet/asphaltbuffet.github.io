@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>dev blog on asphaltbuffet dev blog</title>
+    <title>dev-blog on asphaltbuffet dev blog</title>
     <link>https://asphaltbuffet.com/projects/dev-blog/</link>
-    <description>Recent content in dev blog on asphaltbuffet dev blog</description>
+    <description>Recent content in dev-blog on asphaltbuffet dev blog</description>
     <generator>Hugo -- gohugo.io</generator><atom:link href="https://asphaltbuffet.com/projects/dev-blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Mermaid &#43; Hugo</title>
