@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>blog on asphaltbuffet dev blog</title>
-    <link>https://asphaltbuffet.com/tags/blog/</link>
-    <description>Recent content in blog on asphaltbuffet dev blog</description>
+    <title>sri on asphaltbuffet dev blog</title>
+    <link>https://asphaltbuffet.com/tags/sri/</link>
+    <description>Recent content in sri on asphaltbuffet dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 17 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://asphaltbuffet.com/tags/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 17 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://asphaltbuffet.com/tags/sri/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SRI: Fixing Security Warnings</title>
       <link>https://asphaltbuffet.com/posts/2022/07/js-integrity/</link>
@@ -13,15 +13,6 @@
       
       <guid>https://asphaltbuffet.com/posts/2022/07/js-integrity/</guid>
       <description>&lt;p&gt;Running some static code scanning on my rendered site with &lt;a href=&#34;https://sonarcloud.io/&#34;&gt;Sonarcloud&lt;/a&gt;, I found some potential security concerns with how I was loading the mermaid javascript.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Beginnings</title>
-      <link>https://asphaltbuffet.com/posts/2022/06/beginnings/</link>
-      <pubDate>Tue, 21 Jun 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://asphaltbuffet.com/posts/2022/06/beginnings/</guid>
-      <description>First post and all that&amp;hellip;</description>
     </item>
     
   </channel>

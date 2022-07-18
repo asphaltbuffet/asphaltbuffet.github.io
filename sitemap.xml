@@ -3,7 +3,28 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://asphaltbuffet.com/</loc>
-    <lastmod>2022-07-13T00:33:29-04:00</lastmod>
+    <lastmod>2022-07-17T23:47:50-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/tags/blog/</loc>
+    <lastmod>2022-07-17T23:47:50-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/tags/javascript/</loc>
+    <lastmod>2022-07-17T23:47:50-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/posts/</loc>
+    <lastmod>2022-07-17T23:47:50-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/tags/security/</loc>
+    <lastmod>2022-07-17T23:47:50-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/tags/sri/</loc>
+    <lastmod>2022-07-17T23:47:50-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/posts/2022/07/js-integrity/</loc>
+    <lastmod>2022-07-17T23:47:50-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/tags/</loc>
+    <lastmod>2022-07-17T23:47:50-04:00</lastmod>
   </url><url>
     <loc>https://asphaltbuffet.com/tags/bujo/</loc>
     <lastmod>2022-07-05T10:54:32-04:00</lastmod>
@@ -22,12 +43,6 @@
   </url><url>
     <loc>https://asphaltbuffet.com/posts/2022/07/obsidian-setup/</loc>
     <lastmod>2022-07-05T10:54:32-04:00</lastmod>
-  </url><url>
-    <loc>https://asphaltbuffet.com/posts/</loc>
-    <lastmod>2022-07-13T00:33:29-04:00</lastmod>
-  </url><url>
-    <loc>https://asphaltbuffet.com/tags/</loc>
-    <lastmod>2022-07-13T00:33:29-04:00</lastmod>
   </url><url>
     <loc>https://asphaltbuffet.com/tags/hugo/</loc>
     <lastmod>2022-07-13T00:33:29-04:00</lastmod>
@@ -57,9 +72,6 @@
     <lastmod>2022-06-28T18:09:48-04:00</lastmod>
   </url><url>
     <loc>https://asphaltbuffet.com/posts/2022/06/beginnings/</loc>
-    <lastmod>2022-06-28T18:09:48-04:00</lastmod>
-  </url><url>
-    <loc>https://asphaltbuffet.com/tags/blog/</loc>
     <lastmod>2022-06-28T18:09:48-04:00</lastmod>
   </url><url>
     <loc>https://asphaltbuffet.com/tags/general/</loc>
