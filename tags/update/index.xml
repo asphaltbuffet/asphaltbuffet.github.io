@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>update on asphaltbuffet dev blog</title>
+    <link>https://asphaltbuffet.com/tags/update/</link>
+    <description>Recent content in update on asphaltbuffet dev blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 26 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://asphaltbuffet.com/tags/update/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mermaid &#43; Hugo v2: Better, Faster</title>
+      <link>https://asphaltbuffet.com/posts/2022/06/mermaid-hugo-v2/</link>
+      <pubDate>Sun, 26 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://asphaltbuffet.com/posts/2022/06/mermaid-hugo-v2/</guid>
+      <description>&lt;p&gt;It took three days after &lt;a href=&#34;https://asphaltbuffet.com/posts/2022/06/mermaid-hugo/&#34;&gt;finishing the work&lt;/a&gt; to display &lt;a href=&#34;https://mermaid-js.github.io/mermaid/&#34;&gt;Mermaid&lt;/a&gt; diagrams (using shortcodes) to discover an easier method. Let&amp;rsquo;s talk a bit about custom markdown rendering!&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

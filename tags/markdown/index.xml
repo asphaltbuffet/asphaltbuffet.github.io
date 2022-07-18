@@ -15,5 +15,14 @@
       <description>&lt;p&gt;Here is the setup I&amp;rsquo;ve been using in &lt;a href=&#34;https://obsidian.md/&#34;&gt;Obsidian&lt;/a&gt; since late March 2022. The default plugins and configuration would provide most of the functionality I want. However, I tweaked a few things to add more value than my &lt;a href=&#34;https://bulletjournal.com/&#34;&gt;Bullet Journal&lt;/a&gt; could provide.&lt;/p&gt;</description>
     </item>
     
+    <item>
+      <title>Mermaid &#43; Hugo v2: Better, Faster</title>
+      <link>https://asphaltbuffet.com/posts/2022/06/mermaid-hugo-v2/</link>
+      <pubDate>Sun, 26 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://asphaltbuffet.com/posts/2022/06/mermaid-hugo-v2/</guid>
+      <description>&lt;p&gt;It took three days after &lt;a href=&#34;https://asphaltbuffet.com/posts/2022/06/mermaid-hugo/&#34;&gt;finishing the work&lt;/a&gt; to display &lt;a href=&#34;https://mermaid-js.github.io/mermaid/&#34;&gt;Mermaid&lt;/a&gt; diagrams (using shortcodes) to discover an easier method. Let&amp;rsquo;s talk a bit about custom markdown rendering!&lt;/p&gt;</description>
+    </item>
+    
   </channel>
 </rss>

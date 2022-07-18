@@ -5,7 +5,16 @@
     <link>https://asphaltbuffet.com/tags/mermaid/</link>
     <description>Recent content in mermaid on asphaltbuffet dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 23 Jun 2022 20:16:28 -0400</lastBuildDate><atom:link href="https://asphaltbuffet.com/tags/mermaid/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 26 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://asphaltbuffet.com/tags/mermaid/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mermaid &#43; Hugo v2: Better, Faster</title>
+      <link>https://asphaltbuffet.com/posts/2022/06/mermaid-hugo-v2/</link>
+      <pubDate>Sun, 26 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://asphaltbuffet.com/posts/2022/06/mermaid-hugo-v2/</guid>
+      <description>&lt;p&gt;It took three days after &lt;a href=&#34;https://asphaltbuffet.com/posts/2022/06/mermaid-hugo/&#34;&gt;finishing the work&lt;/a&gt; to display &lt;a href=&#34;https://mermaid-js.github.io/mermaid/&#34;&gt;Mermaid&lt;/a&gt; diagrams (using shortcodes) to discover an easier method. Let&amp;rsquo;s talk a bit about custom markdown rendering!&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Mermaid &#43; Hugo</title>
       <link>https://asphaltbuffet.com/posts/2022/06/mermaid-hugo/</link>
