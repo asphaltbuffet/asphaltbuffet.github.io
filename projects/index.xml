@@ -24,6 +24,15 @@
     </item>
     
     <item>
+      <title>hotpants</title>
+      <link>https://asphaltbuffet.com/projects/hotpants/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://asphaltbuffet.com/projects/hotpants/</guid>
+      <description>arduino sensor with MQTT connectivity</description>
+    </item>
+    
+    <item>
       <title>linux-setup</title>
       <link>https://asphaltbuffet.com/projects/linux-setup/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -39,6 +48,15 @@
       
       <guid>https://asphaltbuffet.com/projects/ogma/</guid>
       <description>A letter tracking application related to The Letter Exchange (LEX).</description>
+    </item>
+    
+    <item>
+      <title>shortshorts</title>
+      <link>https://asphaltbuffet.com/projects/shortshorts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://asphaltbuffet.com/projects/shortshorts/</guid>
+      <description>conveying MQTT data to Timescale database</description>
     </item>
     
     <item>

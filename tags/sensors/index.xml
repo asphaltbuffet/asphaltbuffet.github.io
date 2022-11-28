@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>sensors on asphaltbuffet dev blog</title>
+    <link>https://asphaltbuffet.com/tags/sensors/</link>
+    <description>Recent content in sensors on asphaltbuffet dev blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 27 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://asphaltbuffet.com/tags/sensors/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Monitoring my HVAC</title>
+      <link>https://asphaltbuffet.com/posts/2022/11/hvac-monitoring/</link>
+      <pubDate>Sun, 27 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://asphaltbuffet.com/posts/2022/11/hvac-monitoring/</guid>
+      <description>When I want to know how well my HVAC system is working, smart thermostats and ad-hoc checks don&amp;rsquo;t get me as far as I&amp;rsquo;d like. That means it&amp;rsquo;s time to create an entire system to monitor that information and present it graphically. This is normal, right?
+Requirements Overall, I didn&amp;rsquo;t want to spend much money on this. Yes, time is money, blah blah blah. Learning new tech offsets the cost of time, and it&amp;rsquo;s a better use of late-night chill time than playing a game anyway.</description>
+    </item>
+    
+  </channel>
+</rss>
