@@ -4,7 +4,8 @@
     <title>wherehouse on asphaltbuffet dev blog</title>
     <link>https://asphaltbuffet.com/projects/wherehouse/</link>
     <description>Recent content in wherehouse on asphaltbuffet dev blog</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://asphaltbuffet.com/projects/wherehouse/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language><atom:link href="https://asphaltbuffet.com/projects/wherehouse/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Designing a Side Project: Wherehouse</title>
       <link>https://asphaltbuffet.com/posts/2022/06/designing-a-side-project/</link>

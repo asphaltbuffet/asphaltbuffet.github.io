@@ -4,7 +4,8 @@
     <title>projects on asphaltbuffet dev blog</title>
     <link>https://asphaltbuffet.com/projects/</link>
     <description>Recent content in projects on asphaltbuffet dev blog</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://asphaltbuffet.com/projects/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language><atom:link href="https://asphaltbuffet.com/projects/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>dev-blog</title>
       <link>https://asphaltbuffet.com/projects/dev-blog/</link>
