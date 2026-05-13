@@ -6,8 +6,15 @@
     <description>Recent content in Posts on asphaltbuffet dev blog</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 06 May 2026 15:46:08 -0400</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2026 18:36:20 -0400</lastBuildDate>
     <atom:link href="https://asphaltbuffet.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rooting around in .local/bin</title>
+      <link>https://asphaltbuffet.com/posts/2026/05/nixos-local-bin-path/</link>
+      <pubDate>Tue, 12 May 2026 00:00:00 -0400</pubDate>
+      <guid>https://asphaltbuffet.com/posts/2026/05/nixos-local-bin-path/</guid>
+      <description>&lt;p&gt;Claude Code&amp;rsquo;s &lt;code&gt;/doctor&lt;/code&gt; command told me &lt;code&gt;~/.local/bin&lt;/code&gt; wasn&amp;rsquo;t in my &lt;code&gt;PATH&lt;/code&gt;. That&amp;rsquo;s where it installs its native binary. Simple fix, right?&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Two Hours of NixOS Config I Didn&#39;t Need</title>
       <link>https://asphaltbuffet.com/posts/2026/05/nixos-undocked/</link>
