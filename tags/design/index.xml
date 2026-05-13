@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>design on asphaltbuffet dev blog</title>
+    <title>Design on asphaltbuffet dev blog</title>
     <link>https://asphaltbuffet.com/tags/design/</link>
-    <description>Recent content in design on asphaltbuffet dev blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Design on asphaltbuffet dev blog</description>
+    <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 22 Jun 2022 00:04:30 -0400</lastBuildDate><atom:link href="https://asphaltbuffet.com/tags/design/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 28 Jun 2022 18:09:48 -0400</lastBuildDate>
+    <atom:link href="https://asphaltbuffet.com/tags/design/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Designing a Side Project: Wherehouse</title>
       <link>https://asphaltbuffet.com/posts/2022/06/designing-a-side-project/</link>
       <pubDate>Wed, 22 Jun 2022 00:04:30 -0400</pubDate>
-      
       <guid>https://asphaltbuffet.com/posts/2022/06/designing-a-side-project/</guid>
       <description>Time for a new project. Design before development; new territory for a non-work effort&amp;hellip;</description>
     </item>
-    
   </channel>
 </rss>

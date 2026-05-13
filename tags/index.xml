@@ -4,206 +4,191 @@
     <title>Tags on asphaltbuffet dev blog</title>
     <link>https://asphaltbuffet.com/tags/</link>
     <description>Recent content in Tags on asphaltbuffet dev blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 27 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://asphaltbuffet.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 06 May 2026 15:46:08 -0400</lastBuildDate>
+    <atom:link href="https://asphaltbuffet.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>arduino</title>
+      <title>Hardware</title>
+      <link>https://asphaltbuffet.com/tags/hardware/</link>
+      <pubDate>Mon, 04 May 2026 22:34:26 -0400</pubDate>
+      <guid>https://asphaltbuffet.com/tags/hardware/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux</title>
+      <link>https://asphaltbuffet.com/tags/linux/</link>
+      <pubDate>Mon, 04 May 2026 22:34:26 -0400</pubDate>
+      <guid>https://asphaltbuffet.com/tags/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Nixos</title>
+      <link>https://asphaltbuffet.com/tags/nixos/</link>
+      <pubDate>Mon, 04 May 2026 22:34:26 -0400</pubDate>
+      <guid>https://asphaltbuffet.com/tags/nixos/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Thinkpad</title>
+      <link>https://asphaltbuffet.com/tags/thinkpad/</link>
+      <pubDate>Mon, 04 May 2026 22:34:26 -0400</pubDate>
+      <guid>https://asphaltbuffet.com/tags/thinkpad/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Arduino</title>
       <link>https://asphaltbuffet.com/tags/arduino/</link>
       <pubDate>Sun, 27 Nov 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/arduino/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>async</title>
+      <title>Async</title>
       <link>https://asphaltbuffet.com/tags/async/</link>
       <pubDate>Sun, 27 Nov 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/async/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>go</title>
+      <title>Go</title>
       <link>https://asphaltbuffet.com/tags/go/</link>
       <pubDate>Sun, 27 Nov 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/go/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>grafana</title>
+      <title>Grafana</title>
       <link>https://asphaltbuffet.com/tags/grafana/</link>
       <pubDate>Sun, 27 Nov 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/grafana/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>monitoring</title>
+      <title>Monitoring</title>
       <link>https://asphaltbuffet.com/tags/monitoring/</link>
       <pubDate>Sun, 27 Nov 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/monitoring/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>sensors</title>
+      <title>Sensors</title>
       <link>https://asphaltbuffet.com/tags/sensors/</link>
       <pubDate>Sun, 27 Nov 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/sensors/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>timescale</title>
+      <title>Timescale</title>
       <link>https://asphaltbuffet.com/tags/timescale/</link>
       <pubDate>Sun, 27 Nov 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/timescale/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>blog</title>
+      <title>Blog</title>
       <link>https://asphaltbuffet.com/tags/blog/</link>
       <pubDate>Sun, 17 Jul 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/blog/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>javascript</title>
+      <title>Javascript</title>
       <link>https://asphaltbuffet.com/tags/javascript/</link>
       <pubDate>Sun, 17 Jul 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/javascript/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>security</title>
+      <title>Security</title>
       <link>https://asphaltbuffet.com/tags/security/</link>
       <pubDate>Sun, 17 Jul 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/security/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>sri</title>
+      <title>Sri</title>
       <link>https://asphaltbuffet.com/tags/sri/</link>
       <pubDate>Sun, 17 Jul 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/sri/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>bujo</title>
+      <title>Bujo</title>
       <link>https://asphaltbuffet.com/tags/bujo/</link>
       <pubDate>Sun, 03 Jul 2022 11:43:28 -0400</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/bujo/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>configuration</title>
+      <title>Configuration</title>
       <link>https://asphaltbuffet.com/tags/configuration/</link>
       <pubDate>Sun, 03 Jul 2022 11:43:28 -0400</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/configuration/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>journal</title>
+      <title>Journal</title>
       <link>https://asphaltbuffet.com/tags/journal/</link>
       <pubDate>Sun, 03 Jul 2022 11:43:28 -0400</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/journal/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>markdown</title>
+      <title>Markdown</title>
       <link>https://asphaltbuffet.com/tags/markdown/</link>
       <pubDate>Sun, 03 Jul 2022 11:43:28 -0400</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/markdown/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>obsidian</title>
+      <title>Obsidian</title>
       <link>https://asphaltbuffet.com/tags/obsidian/</link>
       <pubDate>Sun, 03 Jul 2022 11:43:28 -0400</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/obsidian/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>hugo</title>
+      <title>Hugo</title>
       <link>https://asphaltbuffet.com/tags/hugo/</link>
       <pubDate>Sun, 26 Jun 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/hugo/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>mermaid</title>
+      <title>Mermaid</title>
       <link>https://asphaltbuffet.com/tags/mermaid/</link>
       <pubDate>Sun, 26 Jun 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/mermaid/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>tools</title>
+      <title>Tools</title>
       <link>https://asphaltbuffet.com/tags/tools/</link>
       <pubDate>Sun, 26 Jun 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/tools/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>update</title>
+      <title>Update</title>
       <link>https://asphaltbuffet.com/tags/update/</link>
       <pubDate>Sun, 26 Jun 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/update/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>design</title>
+      <title>Design</title>
       <link>https://asphaltbuffet.com/tags/design/</link>
       <pubDate>Wed, 22 Jun 2022 00:04:30 -0400</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/design/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>general</title>
+      <title>General</title>
       <link>https://asphaltbuffet.com/tags/general/</link>
       <pubDate>Tue, 21 Jun 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://asphaltbuffet.com/tags/general/</guid>
       <description></description>
     </item>
-    
   </channel>
 </rss>

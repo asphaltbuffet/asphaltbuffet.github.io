@@ -4,7 +4,8 @@
     <title>go-status-gif on asphaltbuffet dev blog</title>
     <link>https://asphaltbuffet.com/projects/go-status-gif/</link>
     <description>Recent content in go-status-gif on asphaltbuffet dev blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language><atom:link href="https://asphaltbuffet.com/projects/go-status-gif/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="https://asphaltbuffet.com/projects/go-status-gif/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
