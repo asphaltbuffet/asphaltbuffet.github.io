@@ -3,7 +3,28 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://asphaltbuffet.com/</loc>
-    <lastmod>2026-05-13T18:36:20-04:00</lastmod>
+    <lastmod>2026-05-19T16:48:33-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/posts/2026/05/jj-background-fetch/</loc>
+    <lastmod>2026-05-19T16:48:33-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/tags/automation/</loc>
+    <lastmod>2026-05-19T16:48:33-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/tags/jujutsu/</loc>
+    <lastmod>2026-05-19T16:48:33-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/tags/nix/</loc>
+    <lastmod>2026-05-19T16:48:33-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/tags/nixos/</loc>
+    <lastmod>2026-05-19T16:48:33-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/posts/</loc>
+    <lastmod>2026-05-19T16:48:33-04:00</lastmod>
+  </url><url>
+    <loc>https://asphaltbuffet.com/tags/</loc>
+    <lastmod>2026-05-19T16:48:33-04:00</lastmod>
   </url><url>
     <loc>https://asphaltbuffet.com/tags/claude-code/</loc>
     <lastmod>2026-05-13T18:36:20-04:00</lastmod>
@@ -11,22 +32,10 @@
     <loc>https://asphaltbuffet.com/tags/home-manager/</loc>
     <lastmod>2026-05-13T18:36:20-04:00</lastmod>
   </url><url>
-    <loc>https://asphaltbuffet.com/tags/nix/</loc>
-    <lastmod>2026-05-13T18:36:20-04:00</lastmod>
-  </url><url>
     <loc>https://asphaltbuffet.com/projects/nix-config/</loc>
     <lastmod>2026-05-13T18:36:20-04:00</lastmod>
   </url><url>
-    <loc>https://asphaltbuffet.com/tags/nixos/</loc>
-    <lastmod>2026-05-13T18:36:20-04:00</lastmod>
-  </url><url>
-    <loc>https://asphaltbuffet.com/posts/</loc>
-    <lastmod>2026-05-13T18:36:20-04:00</lastmod>
-  </url><url>
     <loc>https://asphaltbuffet.com/posts/2026/05/nixos-local-bin-path/</loc>
-    <lastmod>2026-05-13T18:36:20-04:00</lastmod>
-  </url><url>
-    <loc>https://asphaltbuffet.com/tags/</loc>
     <lastmod>2026-05-13T18:36:20-04:00</lastmod>
   </url><url>
     <loc>https://asphaltbuffet.com/tags/hardware/</loc>

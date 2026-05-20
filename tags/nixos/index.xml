@@ -6,8 +6,15 @@
     <description>Recent content in Nixos on asphaltbuffet dev blog</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 13 May 2026 18:36:20 -0400</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 16:48:33 -0400</lastBuildDate>
     <atom:link href="https://asphaltbuffet.com/tags/nixos/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automated Fixes for My Failures</title>
+      <link>https://asphaltbuffet.com/posts/2026/05/jj-background-fetch/</link>
+      <pubDate>Tue, 19 May 2026 20:29:52 -0400</pubDate>
+      <guid>https://asphaltbuffet.com/posts/2026/05/jj-background-fetch/</guid>
+      <description>Using automated scripts to avoid remembering to use tools correctly.</description>
+    </item>
     <item>
       <title>Rooting around in .local/bin</title>
       <link>https://asphaltbuffet.com/posts/2026/05/nixos-local-bin-path/</link>

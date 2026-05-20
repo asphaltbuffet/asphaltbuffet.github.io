@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Jujutsu on asphaltbuffet dev blog</title>
+    <link>https://asphaltbuffet.com/tags/jujutsu/</link>
+    <description>Recent content in Jujutsu on asphaltbuffet dev blog</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 19 May 2026 16:48:33 -0400</lastBuildDate>
+    <atom:link href="https://asphaltbuffet.com/tags/jujutsu/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automated Fixes for My Failures</title>
+      <link>https://asphaltbuffet.com/posts/2026/05/jj-background-fetch/</link>
+      <pubDate>Tue, 19 May 2026 20:29:52 -0400</pubDate>
+      <guid>https://asphaltbuffet.com/posts/2026/05/jj-background-fetch/</guid>
+      <description>Using automated scripts to avoid remembering to use tools correctly.</description>
+    </item>
+  </channel>
+</rss>
