@@ -1,19 +1,54 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>Update on asphaltbuffet dev blog</title>
-    <link>https://asphaltbuffet.com/tags/update/</link>
-    <description>Recent content in Update on asphaltbuffet dev blog</description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <lastBuildDate>Mon, 18 Jul 2022 00:03:48 -0400</lastBuildDate>
-    <atom:link href="https://asphaltbuffet.com/tags/update/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Mermaid &#43; Hugo v2: Better, Faster</title>
-      <link>https://asphaltbuffet.com/posts/2022/06/mermaid-hugo-v2/</link>
-      <pubDate>Sun, 26 Jun 2022 00:00:00 +0000</pubDate>
-      <guid>https://asphaltbuffet.com/posts/2022/06/mermaid-hugo-v2/</guid>
-      <description>&lt;p&gt;It took three days after &lt;a href=&#34;https://asphaltbuffet.com/posts/2022/06/mermaid-hugo/&#34;&gt;finishing the work&lt;/a&gt; to display &lt;a href=&#34;https://mermaid-js.github.io/mermaid/&#34;&gt;Mermaid&lt;/a&gt; diagrams (using shortcodes) to discover an easier method. Let&amp;rsquo;s talk a bit about custom markdown rendering!&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>asphaltbuffet dev blog – Update</title><link>https://asphaltbuffet.com/tags/update/</link><description>Recent content in Update on asphaltbuffet dev blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 26 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://asphaltbuffet.com/tags/update/index.xml" rel="self" type="application/rss+xml"/><item><title>Mermaid + Hugo v2: Better, Faster</title><link>https://asphaltbuffet.com/blog/mermaid-hugo-v2/</link><pubDate>Sun, 26 Jun 2022 00:00:00 +0000</pubDate><guid>https://asphaltbuffet.com/blog/mermaid-hugo-v2/</guid><description>
+&lt;p&gt;It took three days after &lt;a href="https://asphaltbuffet.com/blog/mermaid-hugo/"&gt;finishing the work&lt;/a&gt; to display &lt;a href="https://mermaid-js.github.io/mermaid/"target="_blank" rel="noopener"&gt;Mermaid&lt;/a&gt; diagrams (using shortcodes) to discover an easier method. Let&amp;rsquo;s talk a bit about custom markdown rendering!&lt;/p&gt;
+&lt;p&gt;I don&amp;rsquo;t remember the actual search that led me to the unanswered &lt;a href="https://github.com/adityatelange/hugo-PaperMod/discussions/850"target="_blank" rel="noopener"&gt;discussion&lt;/a&gt; on the PaperMod GitHub page. No, that&amp;rsquo;s not entirely true. I &lt;strong&gt;do&lt;/strong&gt; remember how I found this. It was in my unclosed tabs as I cleaned up my browser after the initial implementation. What, you don&amp;rsquo;t have to routinely go back and close a couple (dozen) tabs following the completion of a task? Regardless, this is where you find me, dear reader.&lt;/p&gt;
+&lt;p&gt;In any case&amp;hellip;&lt;/p&gt;
+&lt;h2&gt;Missed Connections&lt;span class="hx:absolute hx:-mt-20" id="missed-connections"&gt;&lt;/span&gt;
+&lt;a href="#missed-connections" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;One of the tabs caught my eye, and I read further; maybe I could add something helpful since I just do that same thing (they were trying to display Mermaid in Hugo). &lt;strong&gt;Maybe&lt;/strong&gt; I could get something else useful from the discussion. Oh, here&amp;rsquo;s that foreshadowing again.&lt;/p&gt;
+&lt;p&gt;I was interested that they were trying to do the same thing but going at it a different way; they also linked to some &lt;a href="https://gohugo.io/content-management/diagrams/#mermaid-diagrams"target="_blank" rel="noopener"&gt;sources&lt;/a&gt; that I hadn&amp;rsquo;t found in my first web search foray. And I learned something. It&amp;rsquo;s relatively easy to write some functionality that uses code fences like the shortcode I was already doing. My ability to remember how to write three backticks is &lt;strong&gt;much&lt;/strong&gt; better than remembering the format and syntax of shortcodes so far.&lt;/p&gt;
+&lt;h2&gt;You Had Me at ```mermaid&lt;span class="hx:absolute hx:-mt-20" id="you-had-me-at-mermaid"&gt;&lt;/span&gt;
+&lt;a href="#you-had-me-at-mermaid" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Create &lt;code&gt;layouts/_markup/render-codeblock-mermaid.html&lt;/code&gt; with this content:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;mermaid&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; {{- .Inner | safeHTML }}
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;{{ .Page.Store.Set &amp;#34;hasMermaid&amp;#34; true }}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;We lose the justification (more on why that&amp;rsquo;s ok later). However, the last line is a real nice touch. This ensures that a page variable is set that can be used later to load the mermaid rendering javascript.&lt;/p&gt;
+&lt;p&gt;With that addition/adjustment, now I only have to put the following text in a markdown file, and it&amp;rsquo;s loaded just fine. Javascript is loaded as required; no frontmatter adjustments are needed.&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;```mermaid
+graph LR
+A{do you need a panflute?} --&amp;gt;|yes| B[no you don&amp;#39;t]
+B --&amp;gt; C[no panflute]
+A --&amp;gt;|no| C
+```&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div role="img" aria-label="Diagram"&gt;
+&lt;pre class="mermaid hx:mt-6"&gt;
+graph LR
+A{do you need a panflute?} --&amp;gt;|yes| B[no you don&amp;#39;t]
+B --&amp;gt; C[no panflute]
+A --&amp;gt;|no| C
+&lt;/pre&gt;
+&lt;/div&gt;&lt;h2&gt;And yet&amp;hellip;&lt;span class="hx:absolute hx:-mt-20" id="and-yet"&gt;&lt;/span&gt;
+&lt;a href="#and-yet" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Ok, so you might want this centered. You could write different markdown renderers and use something like &lt;code&gt;mermaid-left&lt;/code&gt; or &lt;code&gt;mermaid-center&lt;/code&gt;, but that feels bad, and I believe you might need to feel a little dirty for thinking about it. Just create a shortcode for centering inner content and call it a day. That example isn&amp;rsquo;t here. I may make that one later. I&amp;rsquo;m not sure at this point how much I really want/need it, so we&amp;rsquo;ll see if I get there or not.&lt;/p&gt;</description></item></channel></rss>

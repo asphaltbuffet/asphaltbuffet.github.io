@@ -1,0 +1,161 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>asphaltbuffet dev blog – Periodic-Notes</title><link>https://asphaltbuffet.com/tags/periodic-notes/</link><description>Recent content in Periodic-Notes on asphaltbuffet dev blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 03 Jul 2022 22:04:03 -0400</lastBuildDate><atom:link href="https://asphaltbuffet.com/tags/periodic-notes/index.xml" rel="self" type="application/rss+xml"/><item><title>Obsidian: Daily Notes</title><link>https://asphaltbuffet.com/blog/daily-notes/</link><pubDate>Sun, 03 Jul 2022 22:04:03 -0400</pubDate><guid>https://asphaltbuffet.com/blog/daily-notes/</guid><description>
+&lt;p&gt;I love &lt;a href="https://bulletjournal.com/"target="_blank" rel="noopener"&gt;Bullet Journaling&lt;/a&gt;. It has added a much-needed structure to my days and helped prevent essential things from falling through the cracks. However, it&amp;rsquo;s not always easy to switch back and forth to a written journal when my work is all digital. I also wanted a way to track script snippets in my journal so that I could easily copy-pasta later on when I needed to repeat actions from a previous day. I needed a way to digitize &lt;em&gt;some&lt;/em&gt; of my daily journal entries without the arduous task of completely duplicating my writing.&lt;/p&gt;
+&lt;h2&gt;Requirements&lt;span class="hx:absolute hx:-mt-20" id="requirements"&gt;&lt;/span&gt;
+&lt;a href="#requirements" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Plain ol&amp;rsquo; vanilla Obsidian wasn&amp;rsquo;t going to cut it here. The following examples rely on the following plugins&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Templater&lt;/li&gt;
+&lt;li&gt;Admonitions&lt;/li&gt;
+&lt;li&gt;Icon Shortcodes&lt;/li&gt;
+&lt;li&gt;Tasks&lt;/li&gt;
+&lt;li&gt;Dataview&lt;/li&gt;
+&lt;li&gt;Periodic Notes&lt;/li&gt;
+&lt;li&gt;Calendar&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Creating the files&lt;span class="hx:absolute hx:-mt-20" id="creating-the-files"&gt;&lt;/span&gt;
+&lt;a href="#creating-the-files" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I use Periodic Notes with Calendar to automatically create daily notes in my vault. The appropriate file is made in the right place by clicking on the current day (or previous days if I need to create retroactive entries). Calendar is essentially a UI for Periodic Notes in this case.&lt;/p&gt;
+&lt;h3&gt;Periodic Notes&lt;span class="hx:absolute hx:-mt-20" id="periodic-notes"&gt;&lt;/span&gt;
+&lt;a href="#periodic-notes" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The Periodic Notes plugin defines the title of a daily note file (.md). This needs to stay consistent, or you&amp;rsquo;ll be renaming files later so that the system links properly. I recommend thinking about this part the most at the beginning. Most other settings can be tweaked and refined; this one is essentially immutable.&lt;/p&gt;
+&lt;div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200"&gt;
+&lt;div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"&gt;&lt;svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/&gt;&lt;/svg&gt;&lt;/div&gt;
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7"&gt;
+&lt;div class="hx:mt-6 hx:leading-7 hx:first:mt-0"&gt;Do not set up the templating in Periodic Notes if you&amp;rsquo;ll be using folder templates in Templater. This may cause unexpected issues When repeating template evaluation.&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Date Formats&lt;span class="hx:absolute hx:-mt-20" id="date-formats"&gt;&lt;/span&gt;
+&lt;a href="#date-formats" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;I changed most date formatting to match the same format in my written journal:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Daily&lt;/strong&gt;: &lt;code&gt;YYY.MM.DD - ddd&lt;/code&gt; &lt;em&gt;&amp;ldquo;2022.07.05 - Tue&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Weekly&lt;/strong&gt;: &lt;code&gt;gggg-[W]ww&lt;/code&gt; &lt;em&gt;&amp;ldquo;2022-W28&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Monthly&lt;/strong&gt;: &lt;code&gt;YYYY-MM&lt;/code&gt; &lt;em&gt;&amp;ldquo;2022-07&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Quarterly&lt;/strong&gt;: not configured/enabled; I haven&amp;rsquo;t found a use for quarterly notes yet&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Yearly&lt;/strong&gt;: &lt;code&gt;YYYY&lt;/code&gt; &lt;em&gt;&amp;ldquo;2022&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Templater&lt;span class="hx:absolute hx:-mt-20" id="templater"&gt;&lt;/span&gt;
+&lt;a href="#templater" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Regardless of what creates the daily entry, I want all files in my notes section to have the proper format. To do this, I set folder templates in Templater and trigger Templater on new file creation.&lt;/p&gt;
+&lt;figure&gt;&lt;img src="https://asphaltbuffet.com/blog/daily-notes/folder-templates.png"
+alt="Folder templates configured in Templater"&gt;
+&lt;/figure&gt;
+&lt;p&gt;In my vault, all periodic notes are in the &lt;code&gt;20-periodic-notes&lt;/code&gt; directory. There are sub-directories for daily (&lt;code&gt;21-daily&lt;/code&gt;), weekly (&lt;code&gt;22-weekly&lt;/code&gt;), etc.&lt;/p&gt;
+&lt;h2&gt;Frontmatter&lt;span class="hx:absolute hx:-mt-20" id="frontmatter"&gt;&lt;/span&gt;
+&lt;a href="#frontmatter" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nn"&gt;---&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;date created&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;&amp;lt;% tp.file.creation_date(&amp;#39;dddd, MMMM Do, YYYY h:mm:ss a&amp;#39;) %&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;date modified&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;&amp;lt;% tp.date.now(&amp;#39;dddd, MMMM Do, YYYY h:mm:ss a&amp;#39;) %&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;aliases&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;&amp;lt;%*&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;var fileDate = moment(tp.file.title, &amp;#39;YYYY.MM.DD - ddd&amp;#39;);&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;// moment dates are mutable &lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;let prevDay = moment(fileDate).subtract(1, &amp;#39;d&amp;#39;).format(&amp;#39;YYYY.MM.DD - ddd&amp;#39;);&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;let nextDay = moment(fileDate).add(1, &amp;#39;d&amp;#39;).format(&amp;#39;YYYY.MM.DD - ddd&amp;#39;);&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;let yearLink = fileDate.format(&amp;#39;YYYY&amp;#39;);&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;let quarterLink = fileDate.format(&amp;#39;YYYY-[Q]Q&amp;#39;);&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;let monthLink = fileDate.format(&amp;#39;YYYY-MM&amp;#39;);&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;let weekLink = fileDate.format(&amp;#39;gggg-[W]ww&amp;#39;); &lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-&lt;span class="l"&gt;%&amp;gt; &amp;#34;&amp;lt;% tp.file.title %&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;tags&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;daily_note &amp;lt;% fileDate.format(&amp;#34;YYYYMMDD&amp;#34;) %&amp;gt; &amp;lt;% weekLink %&amp;gt; &amp;lt;% monthLink %&amp;gt; &amp;lt;% quarterLink %&amp;gt; &amp;lt;% yearLink %&amp;gt; &lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;tracking&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;&amp;lt;% tp.system.prompt(&amp;#34;Sleep (hrs):&amp;#34;, &amp;#34;0&amp;#34;, false) %&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;&amp;lt;% tp.file.title %&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nn"&gt;---&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;A &lt;strong&gt;lot&lt;/strong&gt; is going on here to set up the meta-information for each daily note.&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;date created&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;&amp;lt;% tp.file.creation_date(&amp;#39;dddd, MMMM Do, YYYY h:mm:ss a&amp;#39;) %&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If we start by looking at the first line, the power of Templater gets to show off a bit here.&lt;/p&gt;
+&lt;h2&gt;Full Daily Template&lt;span class="hx:absolute hx:-mt-20" id="full-daily-template"&gt;&lt;/span&gt;
+&lt;a href="#full-daily-template" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;---
+date created: &amp;lt;% tp.file.creation_date(&amp;#39;dddd, MMMM Do, YYYY h:mm:ss a&amp;#39;) %&amp;gt;
+date modified: &amp;lt;% tp.date.now(&amp;#39;dddd, MMMM Do, YYYY h:mm:ss a&amp;#39;) %&amp;gt;
+aliases: &amp;lt;%*
+var fileDate = moment(tp.file.title, &amp;#39;YYYY.MM.DD - ddd&amp;#39;);
+// moment dates are mutable
+let prevDay = moment(fileDate).subtract(1, &amp;#39;d&amp;#39;).format(&amp;#39;YYYY.MM.DD - ddd&amp;#39;);
+let nextDay = moment(fileDate).add(1, &amp;#39;d&amp;#39;).format(&amp;#39;YYYY.MM.DD - ddd&amp;#39;);
+let yearLink = fileDate.format(&amp;#39;YYYY&amp;#39;);
+let quarterLink = fileDate.format(&amp;#39;YYYY-[Q]Q&amp;#39;);
+let monthLink = fileDate.format(&amp;#39;YYYY-MM&amp;#39;);
+let weekLink = fileDate.format(&amp;#39;gggg-[W]ww&amp;#39;);
+-%&amp;gt; &amp;#34;&amp;lt;% tp.file.title %&amp;gt;&amp;#34;
+tags: daily_note &amp;lt;% fileDate.format(&amp;#34;YYYYMMDD&amp;#34;) %&amp;gt; &amp;lt;% weekLink %&amp;gt; &amp;lt;% monthLink %&amp;gt; &amp;lt;% quarterLink %&amp;gt; &amp;lt;% yearLink %&amp;gt;
+tracking:
+sleep: &amp;lt;% tp.system.prompt(&amp;#34;Sleep (hrs):&amp;#34;, &amp;#34;0&amp;#34;, false) %&amp;gt;
+title: &amp;lt;% tp.file.title %&amp;gt;
+---
+&amp;lt;%*
+// ❮❮ ⋮ 2021 › Q4 › 12 › W49 ⋮ ❯❯
+// [[path/to/file|display_text]]
+let navStr = `[[20-periodic-notes/21-daily/${prevDay}|❮❮]] ⋮ [[20-periodic-notes/25-yearly/${yearLink}|${yearLink}]] › [[20-periodic-notes/24-quarterly/${quarterLink}|${fileDate.format(&amp;#39;[Q]Q&amp;#39;)}]] › [[20-periodic-notes/23-monthly/${monthLink}|${fileDate.format(&amp;#39;MMM&amp;#39;)}]] › [[20-periodic-notes/22-weekly/${weekLink}|${fileDate.format(&amp;#39;[W]ww&amp;#39;)}]] ⋮ [[20-periodic-notes/21-daily/${nextDay}|❯❯]]`;
+tR &amp;#43;= navStr
+%&amp;gt;
+# &amp;lt;% tp.file.title %&amp;gt;
+## :fas_calendar_check: Agenda
+&amp;gt; [!calendar]&amp;#43;
+&amp;gt; ![[&amp;lt;% moment(fileDate).format(&amp;#39;YYYY-MM&amp;#39;) %&amp;gt;#^&amp;lt;% moment(fileDate).format(&amp;#39;YYYYMMDD&amp;#39;) %&amp;gt;]]
+## :fas_list_check: Tasks
+&amp;gt; [!overdue]&amp;#43;
+&amp;gt; ```tasks
+&amp;gt; not done
+&amp;gt; due before &amp;lt;% fileDate.format(&amp;#39;YYYY-MM-DD&amp;#39;) %&amp;gt;
+&amp;gt; ```
+&amp;gt; [!unfinished]&amp;#43;
+&amp;gt;
+&amp;gt;```tasks
+&amp;gt; not done
+&amp;gt;
+&amp;gt; due on &amp;lt;% moment(fileDate).format(&amp;#39;YYYY-MM-DD&amp;#39;) %&amp;gt;
+&amp;gt;
+&amp;gt; short mode
+&amp;gt; ```
+&amp;gt; [!due-soon]-
+&amp;gt;
+&amp;gt;```tasks
+&amp;gt; not done
+&amp;gt;
+&amp;gt; due after &amp;lt;% moment(fileDate).format(&amp;#39;YYYY-MM-DD&amp;#39;) %&amp;gt;
+&amp;gt; due before &amp;lt;% moment(fileDate).add(1, &amp;#39;w&amp;#39;).format(&amp;#39;YYYY-MM-DD&amp;#39;) %&amp;gt;
+&amp;gt;
+&amp;gt; short mode
+&amp;gt; ```
+## :fas_pen_nib: Notes
+- …
+^notes-link&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;I talk more about my setup in a &lt;a href="https://asphaltbuffet.com/blog/obsidian-setup/"&gt;previous post&lt;/a&gt;&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description></item></channel></rss>

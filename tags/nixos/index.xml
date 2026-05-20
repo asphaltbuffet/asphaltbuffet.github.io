@@ -1,33 +1,498 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>Nixos on asphaltbuffet dev blog</title>
-    <link>https://asphaltbuffet.com/tags/nixos/</link>
-    <description>Recent content in Nixos on asphaltbuffet dev blog</description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <lastBuildDate>Tue, 19 May 2026 16:48:33 -0400</lastBuildDate>
-    <atom:link href="https://asphaltbuffet.com/tags/nixos/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Automated Fixes for My Failures</title>
-      <link>https://asphaltbuffet.com/posts/2026/05/jj-background-fetch/</link>
-      <pubDate>Tue, 19 May 2026 20:29:52 -0400</pubDate>
-      <guid>https://asphaltbuffet.com/posts/2026/05/jj-background-fetch/</guid>
-      <description>Using automated scripts to avoid remembering to use tools correctly.</description>
-    </item>
-    <item>
-      <title>Rooting around in .local/bin</title>
-      <link>https://asphaltbuffet.com/posts/2026/05/nixos-local-bin-path/</link>
-      <pubDate>Tue, 12 May 2026 00:00:00 -0400</pubDate>
-      <guid>https://asphaltbuffet.com/posts/2026/05/nixos-local-bin-path/</guid>
-      <description>&lt;p&gt;Claude Code&amp;rsquo;s &lt;code&gt;/doctor&lt;/code&gt; command told me &lt;code&gt;~/.local/bin&lt;/code&gt; wasn&amp;rsquo;t in my &lt;code&gt;PATH&lt;/code&gt;. That&amp;rsquo;s where it installs its native binary. Simple fix, right?&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Two Hours of NixOS Config I Didn&#39;t Need</title>
-      <link>https://asphaltbuffet.com/posts/2026/05/nixos-undocked/</link>
-      <pubDate>Mon, 04 May 2026 22:34:26 -0400</pubDate>
-      <guid>https://asphaltbuffet.com/posts/2026/05/nixos-undocked/</guid>
-      <description>A dead external monitor, three wrong hypotheses, and the five-seconds of work I should have done first.</description>
-    </item>
-  </channel>
-</rss>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>asphaltbuffet dev blog – Nixos</title><link>https://asphaltbuffet.com/tags/nixos/</link><description>Recent content in Nixos on asphaltbuffet dev blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 19 May 2026 20:29:52 -0400</lastBuildDate><atom:link href="https://asphaltbuffet.com/tags/nixos/index.xml" rel="self" type="application/rss+xml"/><item><title>Automated Fixes for My Failures</title><link>https://asphaltbuffet.com/blog/jj-background-fetch/</link><pubDate>Tue, 19 May 2026 20:29:52 -0400</pubDate><guid>https://asphaltbuffet.com/blog/jj-background-fetch/</guid><description>
+&lt;p&gt;I constantly open a repo in my terminal and start making changes and then rebase at some point when I realize that I never ran &lt;code&gt;jj git fetch&lt;/code&gt; and now I have divergent changes, conflicts, etc. At some point a reasonable person stops repeating the action because they learn from their mistakes. To me, it seems like a decent reason to automate the problem away.&lt;/p&gt;
+&lt;p&gt;I might as well do some overengineering it while I&amp;rsquo;m at it.&lt;/p&gt;
+&lt;p&gt;The concept was fairly simple: run &lt;code&gt;jj git fetch --all-remotes&lt;/code&gt; in every jujutsu repo under &lt;code&gt;~/dev/&lt;/code&gt; on a schedule, without me involved. A systemd user timer felt like the right shape — it runs independently of any shell session, survives reboots, and integrates with system logging out of the box. The implementation ended up being a justafiable excuse to use &lt;code&gt;pkgs.writeShellApplication&lt;/code&gt;, which I like using whenever I can (I don&amp;rsquo;t know why). It&amp;rsquo;s good tho. I&amp;rsquo;m going to tell you about it.&lt;/p&gt;
+&lt;h2&gt;The Timer Is the Easy Part&lt;span class="hx:absolute hx:-mt-20" id="the-timer-is-the-easy-part"&gt;&lt;/span&gt;
+&lt;a href="#the-timer-is-the-easy-part" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;systemd user timers in home-manager are not bad. Two blocks in &lt;code&gt;home/modules/jj/default.nix&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nix" data-lang="nix"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;systemd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;services&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;jj-git-fetch&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Description&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Fetch all jj repos under ~/dev&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;After&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;network-online.target&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Service&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;oneshot&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;ExecStart&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="n"&gt;fetchScript&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;/bin/jj-git-fetch-all&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;systemd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;timers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;jj-git-fetch&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Unit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Description&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Periodic jj git fetch for all repos under ~/dev&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Timer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;OnBootSec&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;5m&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;OnUnitActiveSec&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;15m&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Persistent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Install&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WantedBy&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;timers.target&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;};&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;OnBootSec = &amp;quot;5m&amp;quot;&lt;/code&gt; gives the network a moment to exist before trying to do something. &lt;code&gt;OnUnitActiveSec = &amp;quot;15m&amp;quot;&lt;/code&gt; fires every fifteen minutes after that. &lt;code&gt;Persistent = true&lt;/code&gt; is probably not absolutely necessary in this case — if the laptop was asleep at the scheduled time, the timer will catch up on next boot (since this runs every 15 minutes, it&amp;rsquo;s not really saving us much here).&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;fetchScript&lt;/code&gt; is a &lt;code&gt;let&lt;/code&gt; binding pointing at the shell script package, which we&amp;rsquo;ll get to. &lt;em&gt;Spoilers&amp;hellip;&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;Look at my package!&lt;span class="hx:absolute hx:-mt-20" id="look-at-my-package"&gt;&lt;/span&gt;
+&lt;a href="#look-at-my-package" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;So, &lt;a href="https://nixos.org/manual/nixpkgs/stable/#trivial-builder-writeShellScript"target="_blank" rel="noopener"&gt;writeShellScript&lt;/a&gt; is a file, but &lt;a href="https://nixos.org/manual/nixpkgs/stable/#trivial-builder-writeShellApplication"target="_blank" rel="noopener"&gt;writeShellApplication&lt;/a&gt; is a package. Here&amp;rsquo;s where things get interesting. Nix gives you two primitives for packaging shell scripts:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;pkgs.writeShellScript&lt;/code&gt; produces a single derivation containing a script file. That&amp;rsquo;s it. You get a path you can reference. You&amp;rsquo;re responsible for making sure every tool the script calls is available at runtime, either by hard-coding store paths or hoping the environment has them. There&amp;rsquo;s no build-time validation. If the script has a syntax error or calls a tool that isn&amp;rsquo;t in &lt;code&gt;PATH&lt;/code&gt;, you find out when the script fails at runtime. Change your path later and forget about the script? Yeah, you get an error whenever that script runs&amp;hellip; yay!&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;pkgs.writeShellApplication&lt;/code&gt; produces a proper package with a &lt;code&gt;bin/&lt;/code&gt; subdirectory. When you build it, Nix automatically:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Prepends &lt;code&gt;set -euo pipefail&lt;/code&gt; — so the script fails fast on errors, unset variables, and broken pipes without you remembering to do that&lt;/li&gt;
+&lt;li&gt;Runs &lt;code&gt;shellcheck&lt;/code&gt; at &lt;em&gt;build time&lt;/em&gt; — if your script has a bug, &lt;code&gt;nix build&lt;/code&gt; fails, not the systemd unit three days later&lt;/li&gt;
+&lt;li&gt;Manages &lt;code&gt;runtimeInputs&lt;/code&gt; — tools listed there are on &lt;code&gt;$PATH&lt;/code&gt; inside the script, resolved to their store paths automatically, no hard-coding needed&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The &lt;code&gt;runtimeInputs&lt;/code&gt; pattern is quite pleasant. Instead of writing &lt;code&gt;${pkgs.fd}/bin/fd&lt;/code&gt; and &lt;code&gt;${pkgs.jujutsu}/bin/jj&lt;/code&gt; inline, you declare them:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nix" data-lang="nix"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# home/modules/jj/fetch-script.nix&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;pkgs&lt;/span&gt;&lt;span class="p"&gt;}:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;pkgs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;writeShellApplication&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;jj-git-fetch-all&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;runtimeInputs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;pkgs&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;curl&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;fd&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;systemd&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;jujutsu&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;builtins&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;readFile&lt;/span&gt; &lt;span class="sr"&gt;./jj-git-fetch.sh&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;And then the script itself just calls &lt;code&gt;fd&lt;/code&gt;, &lt;code&gt;jj&lt;/code&gt;, &lt;code&gt;curl&lt;/code&gt;, &lt;code&gt;systemd-cat&lt;/code&gt; — short names, no store paths, the way you&amp;rsquo;d write a script for any system (and makes importing scripts really seamless). The derivation takes care of resolving them.&lt;/p&gt;
+&lt;p&gt;I split the package definition into its own file (&lt;code&gt;fetch-script.nix&lt;/code&gt;) and referenced it from &lt;code&gt;default.nix&lt;/code&gt; via &lt;code&gt;import ./fetch-script.nix {inherit pkgs;}&lt;/code&gt;. Simple, not &lt;code&gt;callPackage&lt;/code&gt; — the package only needs &lt;code&gt;pkgs&lt;/code&gt;, so pulling in the full overlay machinery would be overkill.&lt;/p&gt;
+&lt;h2&gt;Finding my point (and some repos)&lt;span class="hx:absolute hx:-mt-20" id="finding-my-point-and-some-repos"&gt;&lt;/span&gt;
+&lt;a href="#finding-my-point-and-some-repos" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The script uses &lt;code&gt;fd&lt;/code&gt; to discover the appropriate repos by looking for &lt;code&gt;.jj/&lt;/code&gt; directories:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;repos&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;fd --type d --hidden --no-ignore &lt;span class="s1"&gt;&amp;#39;^\.jj$&amp;#39;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;&lt;span class="s2"&gt;/dev&amp;#34;&lt;/span&gt; 2&amp;gt;/dev/null &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="nb"&gt;read&lt;/span&gt; -r jjdir&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; dirname &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$jjdir&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;done)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;fd '^\.jj$'&lt;/code&gt; finds directories named exactly &lt;code&gt;.jj&lt;/code&gt; (regex anchored at both ends), anywhere under &lt;code&gt;~/dev/&lt;/code&gt;, including nested paths. &lt;code&gt;dirname&lt;/code&gt; walks each result up one level to get the repo root. This handles repos at any depth without knowing the naming convention in advance — a flat &lt;code&gt;~/dev/foo/&lt;/code&gt;, a grouped &lt;code&gt;~/dev/work/client/project/&lt;/code&gt;, whatever.&lt;/p&gt;
+&lt;p&gt;The alternative would be a glob like &lt;code&gt;~/dev/*/&lt;/code&gt;, which only finds repos one level deep and relies on a consistent directory structure.&lt;/p&gt;
+&lt;p&gt;I could probably collapse the whole discovery-and-fetch loop into a single &lt;code&gt;fd&lt;/code&gt; invocation using &lt;code&gt;-x&lt;/code&gt; to run &lt;code&gt;jj git fetch&lt;/code&gt; once per result — something like &lt;code&gt;fd --type d --hidden --no-ignore '^\.jj$' &amp;quot;$HOME/dev&amp;quot; -x jj --repository '{//}' git fetch --all-remotes&lt;/code&gt;. Cleaner, no &lt;code&gt;while&lt;/code&gt; loop, no intermediate variable. I didn&amp;rsquo;t feel like debugging &lt;code&gt;fd&lt;/code&gt;&amp;rsquo;s placeholder syntax at the time, and the loop works fine. I&amp;rsquo;m not really doing this to learn something today.&lt;/p&gt;
+&lt;h2&gt;The Network Check: Good Enough&lt;span class="hx:absolute hx:-mt-20" id="the-network-check-good-enough"&gt;&lt;/span&gt;
+&lt;a href="#the-network-check-good-enough" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Before doing anything, the script checks whether GitHub is reachable:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; ! curl --silent --head --fail --max-time &lt;span class="m"&gt;5&lt;/span&gt; https://github.com &amp;gt; /dev/null 2&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;1&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;jj-git-fetch: network unavailable or github unreachable, skipping&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; systemd-cat -t jj-git-fetch -p info
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Note &lt;code&gt;exit 0&lt;/code&gt; — the unit exits clean when the network is down. That&amp;rsquo;s intentional. A failed unit shows up as failed in &lt;code&gt;systemctl --user status jj-git-fetch&lt;/code&gt;, and I don&amp;rsquo;t want to stare at red text every morning just because the service fired before the VPN connected. If GitHub is unreachable, the right move is to quietly skip and try again in fifteen minutes.&lt;/p&gt;
+&lt;p&gt;The check is specifically for GitHub and not a generic connectivity check (pinging 8.8.8.8, say) because fetching is only useful if the remote is reachable. A working LAN connection with no internet access would pass a generic ping and then immediately fail on every &lt;code&gt;jj git fetch&lt;/code&gt;. This way the check and the work are testing the same thing.&lt;/p&gt;
+&lt;h2&gt;Per-Repo Logging and Failure Tracking&lt;span class="hx:absolute hx:-mt-20" id="per-repo-logging-and-failure-tracking"&gt;&lt;/span&gt;
+&lt;a href="#per-repo-logging-and-failure-tracking" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;failed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="nv"&gt;IFS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;read&lt;/span&gt; -r repo&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;jj-git-fetch: fetching &lt;/span&gt;&lt;span class="nv"&gt;$repo&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; systemd-cat -t jj-git-fetch -p info
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; ! jj --repository &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$repo&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt; git fetch --all-remotes 2&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; systemd-cat -t jj-git-fetch -p info&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;jj-git-fetch: FAILED for &lt;/span&gt;&lt;span class="nv"&gt;$repo&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; systemd-cat -t jj-git-fetch -p err
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;failed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;done&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$repos&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$failed&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Each repo gets its own log lines at &lt;code&gt;info&lt;/code&gt; priority. Failures are logged at &lt;code&gt;err&lt;/code&gt; priority, which means they show up more prominently in &lt;code&gt;journalctl --user -t jj-git-fetch -p err&lt;/code&gt;. The script continues through all repos regardless — a failure in one shouldn&amp;rsquo;t skip the others. If any repo failed, the overall exit code is nonzero, which marks the systemd unit as failed and makes the problem visible in &lt;code&gt;systemctl --user status&lt;/code&gt;. Yes, this could get noisy. No, I don&amp;rsquo;t care right now.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;journalctl --user -t jj-git-fetch&lt;/code&gt; gives a clean view of just this service&amp;rsquo;s output, timestamped, across all runs.&lt;/p&gt;
+&lt;h2&gt;The 1Password Detour&lt;span class="hx:absolute hx:-mt-20" id="the-1password-detour"&gt;&lt;/span&gt;
+&lt;a href="#the-1password-detour" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In an earlier attempt, I tried a pre-check: &lt;code&gt;op whoami&lt;/code&gt;, to see if 1Password was authenticated before attempting fetches. The idea was that I use SSH keys managed by 1Password&amp;rsquo;s SSH agent, so if 1Password wasn&amp;rsquo;t running, the fetch would fail anyway.&lt;/p&gt;
+&lt;p&gt;Not quite the right approach though: &lt;code&gt;op whoami&lt;/code&gt; returns nonzero unless the 1Password desktop app is fully signed in, but even when executing &lt;code&gt;jj git fetch&lt;/code&gt; manually was fine, the check failed. I just got rid of the check and figured if a fetch fails because auth isn&amp;rsquo;t available, it can log the failure per-repo and move on. That&amp;rsquo;s a better signal than a blanket early exit based on a condition that wasn&amp;rsquo;t actually relevant.&lt;/p&gt;
+&lt;h2&gt;It Works&lt;span class="hx:absolute hx:-mt-20" id="it-works"&gt;&lt;/span&gt;
+&lt;a href="#it-works" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ systemctl --user list-timers --all
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;NEXT LEFT LAST PASSED UNIT
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Mon 2026-05-19 20:02:47 EDT 13min Mon 2026-05-19 19:47:47 EDT 1min ago jj-git-fetch.timer&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ journalctl --user -t jj-git-fetch
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;May &lt;span class="m"&gt;19&lt;/span&gt; 19:47:47 wendigo jj-git-fetch&lt;span class="o"&gt;[&lt;/span&gt;12053&lt;span class="o"&gt;]&lt;/span&gt;: jj-git-fetch: fetching /home/grue/dev/blog
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;May &lt;span class="m"&gt;19&lt;/span&gt; 19:47:49 wendigo jj-git-fetch&lt;span class="o"&gt;[&lt;/span&gt;12053&lt;span class="o"&gt;]&lt;/span&gt;: jj-git-fetch: fetching /home/grue/dev/nix-config
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;May &lt;span class="m"&gt;19&lt;/span&gt; 19:47:52 wendigo jj-git-fetch&lt;span class="o"&gt;[&lt;/span&gt;12053&lt;span class="o"&gt;]&lt;/span&gt;: jj-git-fetch: fetching /home/grue/dev/wherehouse&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Repos fetched, no intervention required, logs readable via &lt;code&gt;journalctl&lt;/code&gt;. The timer fires, does its thing, and disappears. Next run in thirteen minutes.&lt;/p&gt;</description></item><item><title>Rooting around in .local/bin</title><link>https://asphaltbuffet.com/blog/nixos-local-bin-path/</link><pubDate>Tue, 12 May 2026 00:00:00 -0400</pubDate><guid>https://asphaltbuffet.com/blog/nixos-local-bin-path/</guid><description>
+&lt;p&gt;Claude Code&amp;rsquo;s &lt;code&gt;/doctor&lt;/code&gt; command told me &lt;code&gt;~/.local/bin&lt;/code&gt; wasn&amp;rsquo;t in my &lt;code&gt;PATH&lt;/code&gt;. That&amp;rsquo;s where it installs its native binary. Simple fix, right?&lt;/p&gt;
+&lt;p&gt;The symptom was easy to reproduce: open a new shell, run &lt;code&gt;echo $PATH&lt;/code&gt;, and &lt;code&gt;~/.local/bin&lt;/code&gt; is nowhere in there. Claude Code was installed fine; it just couldn&amp;rsquo;t find itself.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;d just make sure that the path was configured in my &lt;code&gt;.zshrc&lt;/code&gt; and all would be good. Since it&amp;rsquo;s NixOS, the obvious fix from home-manager was with &lt;code&gt;home.sessionPath&lt;/code&gt;. One line in &lt;code&gt;home/roles/base.nix&lt;/code&gt;, rebuild, done:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nix" data-lang="nix"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;home&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sessionPath&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;$HOME/.local/bin&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;];&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Tried it. Rebuilt. Ran &lt;code&gt;exec zsh&lt;/code&gt;. Opened Claude Code. Ran &lt;code&gt;/doctor&lt;/code&gt;. Still broken.&lt;/p&gt;
+&lt;h2&gt;In Which I Learn How NixOS Boots a Shell&lt;span class="hx:absolute hx:-mt-20" id="in-which-i-learn-how-nixos-boots-a-shell"&gt;&lt;/span&gt;
+&lt;a href="#in-which-i-learn-how-nixos-boots-a-shell" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Ok, so NixOS generates a script called &lt;code&gt;set-environment&lt;/code&gt; at build time. You can find the one currently running your shell at something like &lt;code&gt;/nix/store/&amp;lt;hash&amp;gt;-set-environment&lt;/code&gt;. It gets sourced via &lt;code&gt;/etc/zshenv&lt;/code&gt; on every shell start, and it does this:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;&lt;span class="s2"&gt;/.nix-profile/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/bin&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;A hard &lt;code&gt;export PATH=&lt;/code&gt;. Not &lt;code&gt;PATH=&amp;quot;something:$PATH&amp;quot;&lt;/code&gt;. A fresh path every time. Usually a good thing to prevent cruft building up, but now important stuff was missing.&lt;/p&gt;
+&lt;p&gt;home-manager&amp;rsquo;s &lt;code&gt;hm-session-vars.sh&lt;/code&gt; — which &lt;strong&gt;does&lt;/strong&gt; correctly add &lt;code&gt;~/.local/bin&lt;/code&gt; — runs &lt;em&gt;before&lt;/em&gt; &lt;code&gt;/etc/zshenv&lt;/code&gt;. So it sets the path, and then NixOS immediately resets it. The entry is right there in &lt;code&gt;hm-session-vars.sh&lt;/code&gt; if you go looking:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;&lt;span class="s2"&gt;/.local/bin&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="p"&gt;:+:&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="nv"&gt;$PATH&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Was this documented anywhere obvious? I mean, &lt;em&gt;probably&lt;/em&gt;, but I didn&amp;rsquo;t do a lot of investigation.&lt;/p&gt;
+&lt;h2&gt;The Actual Fix&lt;span class="hx:absolute hx:-mt-20" id="the-actual-fix"&gt;&lt;/span&gt;
+&lt;a href="#the-actual-fix" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Searching online got me to a better option pretty quickly: NixOS has &lt;a href="https://search.nixos.org/options?query=localBinInPath"target="_blank" rel="noopener"&gt;&lt;code&gt;environment.localBinInPath&lt;/code&gt;&lt;/a&gt;. Setting it to &lt;code&gt;true&lt;/code&gt; injects &lt;code&gt;~/.local/bin&lt;/code&gt; directly into the &lt;code&gt;set-environment&lt;/code&gt; script, so it survives the reset.&lt;/p&gt;
+&lt;p&gt;One line in &lt;code&gt;nixos/profiles/base.nix&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nix" data-lang="nix"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;environment&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;localBinInPath&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Rebuild. New shell. &lt;code&gt;~/.local/bin&lt;/code&gt; is in &lt;code&gt;$PATH&lt;/code&gt;. Claude Code&amp;rsquo;s &lt;code&gt;/doctor&lt;/code&gt; command goes quiet. Mission accomplished.&lt;/p&gt;
+&lt;h2&gt;Onions and Parfaits&lt;span class="hx:absolute hx:-mt-20" id="onions-and-parfaits"&gt;&lt;/span&gt;
+&lt;a href="#onions-and-parfaits" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;There are layers here I didn&amp;rsquo;t consider, and the lesson isn&amp;rsquo;t subtle: on NixOS, if something isn&amp;rsquo;t in the &lt;code&gt;PATH&lt;/code&gt; that &lt;code&gt;set-environment&lt;/code&gt; builds, it isn&amp;rsquo;t in your &lt;code&gt;PATH&lt;/code&gt;. Full stop. home-manager&amp;rsquo;s &lt;code&gt;sessionPath&lt;/code&gt;, &lt;code&gt;sessionVariables&lt;/code&gt;, anything in &lt;code&gt;hm-session-vars.sh&lt;/code&gt; — all of it happens &lt;em&gt;before&lt;/em&gt; the hard reset. Anything you want to survive has to come from the NixOS level.&lt;/p&gt;
+&lt;p&gt;Was &lt;code&gt;home.sessionPath&lt;/code&gt; the wrong tool? Yes. Would I have tried it first anyway? Also, yes.&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$PATH&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; tr &lt;span class="s1"&gt;&amp;#39;:&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;\n&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep &lt;span class="nb"&gt;local&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/home/grue/.local/bin&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Good enough.&lt;/p&gt;</description></item><item><title>Two Hours of NixOS Config I Didn't Need</title><link>https://asphaltbuffet.com/blog/nixos-undocked/</link><pubDate>Mon, 04 May 2026 22:34:26 -0400</pubDate><guid>https://asphaltbuffet.com/blog/nixos-undocked/</guid><description>
+&lt;p&gt;Docks are basically plug-and-play, right? So if the monitor isn&amp;rsquo;t working, there must be a setting that&amp;rsquo;s off somewhere. This will be easy.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;(narrator voice: it would not, in fact, be easy)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The hardware path is simple: ThinkPad T14 Gen1 (Intel) connects via USB-C to a Lenovo dock, dock connects via HDMI to a TESmart 4K@60Hz 4:4:4 KVM, KVM connects to a monitor. When I plug the laptop directly into the KVM via HDMI, video works perfectly. When that same HDMI cable runs through the dock, the laptop doesn&amp;rsquo;t detect any external monitor at all. Keyboard and mouse on the dock work fine. This is the worst kind of partial failure — where I seriously wondered if the problem was me all along.&lt;/p&gt;
+&lt;p&gt;The correct diagnosis would have taken five seconds. I did not find it in five seconds.&lt;/p&gt;
+&lt;h2&gt;The Reasonable Wrong Answer&lt;span class="hx:absolute hx:-mt-20" id="the-reasonable-wrong-answer"&gt;&lt;/span&gt;
+&lt;a href="#the-reasonable-wrong-answer" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;USB-C dock on a Thunderbolt-capable laptop, video not working. The obvious suspect is Thunderbolt authorization. Linux requires Thunderbolt devices to be explicitly authorized before they can pass video — the &lt;code&gt;bolt&lt;/code&gt; daemon handles this, and the security level on most systems defaults to &lt;code&gt;user&lt;/code&gt; or &lt;code&gt;secure&lt;/code&gt;, which means unrecognized devices are blocked until approved. USB peripherals (keyboard, mouse) work because they&amp;rsquo;re enumerated through the USB controller, not the Thunderbolt controller. DisplayPort Alt Mode video goes through Thunderbolt. If &lt;code&gt;bolt&lt;/code&gt; isn&amp;rsquo;t running, or if the device hasn&amp;rsquo;t been authorized, it would look exactly like what I saw.&lt;/p&gt;
+&lt;p&gt;Turns out, that reasoning is entirely correct. For a Thunderbolt dock.&lt;/p&gt;
+&lt;p&gt;My T14-specific NixOS profile (&lt;code&gt;nixos/profiles/laptop/t14.nix&lt;/code&gt;) looked like this before I touched it:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nix" data-lang="nix"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;}:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;imports&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="sr"&gt;./.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="sr"&gt;./power.nix&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;nixos-hardware&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;nixosModules&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lenovo-thinkpad-t14-intel-gen1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Sensible. Minimal. I made it worse:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nix" data-lang="nix"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;services&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hardware&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bolt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;boot&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;kernelParams&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;i915.enable_dp_mst=1&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;bolt&lt;/code&gt; line enables the Thunderbolt daemon and, because KDE Plasma ships &lt;code&gt;plasma-thunderbolt&lt;/code&gt;, you get a little system tray widget to authorize devices. The &lt;code&gt;i915.enable_dp_mst=1&lt;/code&gt; was purely speculative — I threw it in because some docks have an internal DisplayPort Multi-Stream Transport hub that needs MST support from the GPU driver, and I figured it couldn&amp;rsquo;t hurt. (I was correct here, it didn&amp;rsquo;t hurt. More precisely, the only thing it accomplished was &amp;ldquo;not hurting&amp;rdquo;).&lt;/p&gt;
+&lt;p&gt;Build was clean. &lt;code&gt;nh os build&lt;/code&gt; added &lt;code&gt;bolt 0.9.8&lt;/code&gt; and &lt;code&gt;plasma-thunderbolt 6.6.4&lt;/code&gt;. After &lt;code&gt;just switch&lt;/code&gt; and a reboot:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ systemctl status bolt
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;● bolt.service - Thunderbolt system service
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Active: active &lt;span class="o"&gt;(&lt;/span&gt;running&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ...
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;May &lt;span class="m"&gt;05&lt;/span&gt; 17:59:24 wendigo boltd&lt;span class="o"&gt;[&lt;/span&gt;5619&lt;span class="o"&gt;]&lt;/span&gt;: udev: found &lt;span class="m"&gt;0&lt;/span&gt; domain
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;May &lt;span class="m"&gt;05&lt;/span&gt; 17:59:24 wendigo boltd&lt;span class="o"&gt;[&lt;/span&gt;5619&lt;span class="o"&gt;]&lt;/span&gt;: udev: enumerating devices
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;May &lt;span class="m"&gt;05&lt;/span&gt; 17:59:44 wendigo boltd&lt;span class="o"&gt;[&lt;/span&gt;5619&lt;span class="o"&gt;]&lt;/span&gt;: power: setting force_power to OFF&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ boltctl list
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# (no output)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;udev: found 0 domain&lt;/code&gt;. The kernel isn&amp;rsquo;t exposing any Thunderbolt domains at all. &lt;code&gt;boltctl list&lt;/code&gt; is silent. The dock isn&amp;rsquo;t showing up because, from the kernel&amp;rsquo;s perspective, there is no Thunderbolt controller talking to anything. This wasn&amp;rsquo;t a configuration problem; the hardware wasn&amp;rsquo;t what I assumed it was.&lt;/p&gt;
+&lt;p&gt;I reverted both changes and went to look at what was actually there.&lt;/p&gt;
+&lt;h2&gt;lsusb. Obviously. Run lsusb &amp;ldquo;First&amp;rdquo;&lt;span class="hx:absolute hx:-mt-20" id="lsusb-obviously-run-lsusb-first"&gt;&lt;/span&gt;
+&lt;a href="#lsusb-obviously-run-lsusb-first" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The diagnostic I should have started with:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ sudo dmesg &lt;span class="p"&gt;|&lt;/span&gt; rg -i &lt;span class="s2"&gt;&amp;#34;thunderbolt|usb4|tbt&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt; 0.015200&lt;span class="o"&gt;]&lt;/span&gt; ACPI: SSDT 0x00000000A652D000 001F15 &lt;span class="o"&gt;(&lt;/span&gt;v02 LENOVO WHL_Tbt_ ...&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt; 6.155008&lt;span class="o"&gt;]&lt;/span&gt; ACPI: bus &lt;span class="nb"&gt;type&lt;/span&gt; thunderbolt registered&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Only ACPI table entries — the firmware knows Thunderbolt exists as a bus type, but no actual controller was probed, no domain registered. Then:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ sudo dmesg &lt;span class="p"&gt;|&lt;/span&gt; rg -i &lt;span class="s2"&gt;&amp;#34;i915|drm|displaylink&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt; 4.119714&lt;span class="o"&gt;]&lt;/span&gt; usb 2-2.2: New USB device found, &lt;span class="nv"&gt;idVendor&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;17e9, &lt;span class="nv"&gt;idProduct&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;6015, &lt;span class="nv"&gt;bcdDevice&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;31.04
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt; 4.119719&lt;span class="o"&gt;]&lt;/span&gt; usb 2-2.2: Manufacturer: DisplayLink&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Hmm&amp;hellip; &lt;code&gt;Manufacturer: DisplayLink&lt;/code&gt;. Let&amp;rsquo;s just dig in there a little deeper:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ lsusb
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Bus &lt;span class="m"&gt;002&lt;/span&gt; Device 003: ID 17e9:6015 DisplayLink ThinkPad Hybrid USB-C with USB-A Dock&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;There&amp;rsquo;s the dock&amp;rsquo;s full product name: &lt;strong&gt;ThinkPad Hybrid USB-C with USB-A Dock&lt;/strong&gt;. The word &amp;ldquo;Hybrid&amp;rdquo; is doing a lot of work there, and I&amp;rsquo;d completely missed it. Lenovo designed this dock to connect to hosts via either USB-C &lt;em&gt;or&lt;/em&gt; USB-A — because USB-A has no DisplayPort Alt Mode capability at all, they couldn&amp;rsquo;t build it around native video passthrough. Instead, the dock contains a DisplayLink USB graphics chip that compresses the framebuffer, ships it over USB, and decompresses it in the dock. The graphics chip doesn&amp;rsquo;t care whether the host connected via USB-C or USB-A; it just needs USB bandwidth.&lt;/p&gt;
+&lt;p&gt;The architecture difference matters enormously for driver requirements:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Architecture&lt;/th&gt;
+&lt;th&gt;How video works&lt;/th&gt;
+&lt;th&gt;Driver required&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;DP Alt Mode&lt;/td&gt;
+&lt;td&gt;GPU drives display directly via repurposed USB-C lanes&lt;/td&gt;
+&lt;td&gt;None (native i915)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Thunderbolt 3/4&lt;/td&gt;
+&lt;td&gt;DP signal tunneled through the TB controller&lt;/td&gt;
+&lt;td&gt;None (bolt for auth)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DisplayLink&lt;/td&gt;
+&lt;td&gt;CPU compresses framebuffer, sent over USB to the dock chip&lt;/td&gt;
+&lt;td&gt;Proprietary kernel module + userspace daemon&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;A native DP Alt Mode dock just works on Linux. A Thunderbolt dock needs &lt;code&gt;bolt&lt;/code&gt; for authorization but otherwise just works. A DisplayLink dock needs a proprietary kernel module (&lt;code&gt;evdi&lt;/code&gt;) and a closed-source userspace daemon from Synaptics. I had the wrong dock for the thing I wanted — zero-config Linux compatibility.&lt;/p&gt;
+&lt;p&gt;Was this clear from the product name? In retrospect, absolutely. Would I have noticed it without the &lt;code&gt;lsusb&lt;/code&gt; output slapping me in the face? Shmaybe?&lt;/p&gt;
+&lt;h2&gt;In Which I Briefly Try to Make DisplayLink Work&lt;span class="hx:absolute hx:-mt-20" id="in-which-i-briefly-try-to-make-displaylink-work"&gt;&lt;/span&gt;
+&lt;a href="#in-which-i-briefly-try-to-make-displaylink-work" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Look, I knew this was unlikely to go well &amp;ndash; but I already had several browser tabs open.&lt;/p&gt;
+&lt;p&gt;The &lt;a href="https://www.synaptics.com/products/displaylink-usb-graphics-software-ubuntu-62"target="_blank" rel="noopener"&gt;DisplayLink Linux package&lt;/a&gt; lives in nixpkgs under &lt;code&gt;pkgs/os-specific/linux/displaylink/default.nix&lt;/code&gt;. It uses &lt;code&gt;requireFile&lt;/code&gt; because Synaptics&amp;rsquo;s license prohibits redistribution — you have to manually download the installer and &lt;code&gt;nix-store --add-fixed&lt;/code&gt; it yourself. The NixOS module lives at &lt;code&gt;nixos/modules/hardware/video/displaylink.nix&lt;/code&gt;. I should have read it before trying anything. I skipped reading it before trying anything.&lt;/p&gt;
+&lt;p&gt;Easy enough to activate: &lt;code&gt;services.xserver.videoDrivers = [&amp;quot;displaylink&amp;quot;]&lt;/code&gt;. The module keys off that list to decide whether to load &lt;code&gt;evdi&lt;/code&gt; and start the &lt;code&gt;dlm.service&lt;/code&gt; daemon.&lt;/p&gt;
+&lt;p&gt;After finding the correct option name, I actually opened the module source. Here&amp;rsquo;s the relevant piece:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nix" data-lang="nix"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;let&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;enabled&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;elem&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;displaylink&amp;#34;&lt;/span&gt; &lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;services&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xserver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;videoDrivers&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;config&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mkIf&lt;/span&gt; &lt;span class="n"&gt;enabled&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;boot&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;extraModulePackages&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="n"&gt;evdi&lt;/span&gt; &lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;boot&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;kernelModules&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;evdi&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;services&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xserver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;externallyConfiguredDrivers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;displaylink&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;environment&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;X11/xorg.conf.d/40-displaylink.conf&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s1"&gt; Section &amp;#34;OutputClass&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s1"&gt; Identifier &amp;#34;DisplayLink&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s1"&gt; MatchDriver &amp;#34;evdi&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s1"&gt; Driver &amp;#34;modesetting&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s1"&gt; ...
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s1"&gt; EndSection
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s1"&gt; &amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;services&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xserver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;displayManager&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sessionCommands&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s1"&gt; &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getBin&lt;/span&gt; &lt;span class="n"&gt;pkgs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xrandr&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s1"&gt;/bin/xrandr --setprovideroutputsource 1 0
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s1"&gt; &amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;systemd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;services&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dlm&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;description&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;DisplayLink Manager Service&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;/etc/X11/xorg.conf.d/&lt;/code&gt;. &lt;code&gt;externallyConfiguredDrivers&lt;/code&gt;. &lt;code&gt;xrandr --setprovideroutputsource&lt;/code&gt;. Every single piece of this module is X11 plumbing. The laptop profile defaults to Wayland. KDE Plasma 6 on Wayland ignores &lt;code&gt;xorg.conf.d&lt;/code&gt; entirely, doesn&amp;rsquo;t use &lt;code&gt;xrandr&lt;/code&gt; for output management, and doesn&amp;rsquo;t load the Xorg &lt;code&gt;modesetting&lt;/code&gt; driver at all.&lt;/p&gt;
+&lt;p&gt;DisplayLink on Wayland is an unresolved upstream problem. Synaptics has been working on it, but it&amp;rsquo;s not production-ready in 2026, and nothing in this NixOS module moves that needle. The community workaround is forcing the session back to X11, which trades away Wayland features/improvements in exchange for getting a dock working — a dock that, by the way, introduces CPU overhead for every frame rendered, because all of that framebuffer compression happens on the host CPU.&lt;/p&gt;
+&lt;p&gt;Well&amp;hellip; crap. The hardware problem may not be something with a software solution afterall. I&amp;rsquo;m as shocked as you are.&lt;/p&gt;
+&lt;h2&gt;Actually Solving It&lt;span class="hx:absolute hx:-mt-20" id="actually-solving-it"&gt;&lt;/span&gt;
+&lt;a href="#actually-solving-it" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;My requirements aren&amp;rsquo;t too complicated:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;HDMI 2.0 output (the TESmart KVM does 4:4:4 chroma at 4K@60Hz; HDMI 1.4 won&amp;rsquo;t do it)&lt;/li&gt;
+&lt;li&gt;Gigabit Ethernet&lt;/li&gt;
+&lt;li&gt;65W+ Power Delivery (T14 and X1 Carbon charging)&lt;/li&gt;
+&lt;li&gt;USB-C host connection&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DP Alt Mode — explicitly not DisplayLink&lt;/strong&gt; (see everything above)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The easiest way to verify #5 before buying is &lt;code&gt;lsusb&lt;/code&gt; output from someone who already owns the dock. That is a level of planning and thoroughness that I am clearly not going to start doing now.&lt;/p&gt;
+&lt;p&gt;The Plugable &lt;a href="https://www.amazon.com/Plugable-USB-Multiport-Adapter-Ethernet/dp/B08NXV94QM"target="_blank" rel="noopener"&gt;USBC-7IN1E&lt;/a&gt; landed at the top of the shortlist. Plugable explicitly documents &lt;a href="https://kb.plugable.com/does-the-usbc-7in1e-support-hdmi-displays-at-4k-60hz"target="_blank" rel="noopener"&gt;4K@60Hz HDMI support&lt;/a&gt; and maintains a &lt;a href="https://kb.plugable.com/understanding-usb-c-alt-mode"target="_blank" rel="noopener"&gt;USB-C Alt Mode explainer&lt;/a&gt; that makes the architecture clear. Around $40–45, driverless, and they explicitly list Linux compatibility. The &lt;a href="https://www.amazon.com/Anker-PowerExpand-Adapter-Delivery-Ethernet/dp/B087QZVQJX"target="_blank" rel="noopener"&gt;Anker 555 (A8383)&lt;/a&gt; is a credible alternative in the same price range, though Anker doesn&amp;rsquo;t officially support Linux (it works in practice). The &lt;a href="https://www.amazon.com/Targus-Multi-Function-DisplayPort-Docking-DOCK430USZ/dp/B07X441JKQ"target="_blank" rel="noopener"&gt;Targus DOCK430USZ&lt;/a&gt; and refurbished &lt;a href="https://www.amazon.com/Lenovo-ThinkPad-Universal-USB-C-Dock/dp/B09DNL4C9J"target="_blank" rel="noopener"&gt;Lenovo 40AY0090US&lt;/a&gt; are both solid options if you want something closer to enterprise-grade, at roughly $60–100.&lt;/p&gt;
+&lt;p&gt;The Arch Linux forums have &lt;a href="https://bbs.archlinux.org/viewtopic.php?id=259408"target="_blank" rel="noopener"&gt;a useful thread on T14 + USB-C + 4K&lt;/a&gt; that confirms the chroma subsampling behavior and validates that native DP Alt Mode docks just work without touching the kernel or xorg config.&lt;/p&gt;
+&lt;p&gt;Note the naming pattern: the dock I &lt;strong&gt;don&amp;rsquo;t&lt;/strong&gt; want is the &lt;em&gt;Hybrid&lt;/em&gt; USB-C with USB-A dock. The dock I &lt;strong&gt;do&lt;/strong&gt; want is the &lt;em&gt;Universal&lt;/em&gt; USB-C Dock, the &lt;em&gt;USB-C 7-in-1&lt;/em&gt;, the straightforward naming that doesn&amp;rsquo;t require a compatibility matrix. &amp;ldquo;Hybrid&amp;rdquo; means &amp;ldquo;we needed it to work with USB-A hosts, so we put a DisplayLink chip inside.&amp;rdquo; That&amp;rsquo;s a real engineering constraint Lenovo solved reasonably well — it&amp;rsquo;s just not compatible with what I&amp;rsquo;m trying to do.&lt;/p&gt;
+&lt;h2&gt;What I Should Have Done&lt;span class="hx:absolute hx:-mt-20" id="what-i-should-have-done"&gt;&lt;/span&gt;
+&lt;a href="#what-i-should-have-done" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;code&gt;lsusb&lt;/code&gt;. That&amp;rsquo;s it. Five seconds.&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ lsusb &lt;span class="p"&gt;|&lt;/span&gt; grep -i lenovo
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Bus &lt;span class="m"&gt;002&lt;/span&gt; Device 003: ID 17e9:6015 DisplayLink ThinkPad Hybrid USB-C with USB-A Dock&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;17e9&lt;/code&gt; is DisplayLink. The word &amp;ldquo;Hybrid&amp;rdquo; is in the name. Everything else that followed — the Thunderbolt hypothesis, the &lt;code&gt;bolt&lt;/code&gt; daemon, the speculative &lt;code&gt;i915.enable_dp_mst=1&lt;/code&gt;, the X11-only module audit — all of it was downstream of not checking what hardware was actually present before starting to theorize.&lt;/p&gt;
+&lt;p&gt;The second thing I should have done: one change at a time. I added &lt;code&gt;bolt&lt;/code&gt; and the kernel parameter together, which meant when the fix didn&amp;rsquo;t work, I had two things to unwind and no signal about which (if either) had done anything. Each hypothesis gets one change, one rebuild, one test. This is obvious advice that I ignored because I was confident in my diagnosis. That confidence was misplaced.&lt;/p&gt;
+&lt;p&gt;The third thing: read the module source before enabling it. &lt;code&gt;nixos/modules/hardware/video/displaylink.nix&lt;/code&gt; has &lt;code&gt;xrandr&lt;/code&gt; in the &lt;code&gt;sessionCommands&lt;/code&gt;. That&amp;rsquo;s an immediate tell — &lt;code&gt;xrandr&lt;/code&gt; doesn&amp;rsquo;t manage Wayland outputs. I would have known in thirty seconds that this path was going nowhere.&lt;/p&gt;
+&lt;p&gt;Hardware problems shouldn&amp;rsquo;t have software solutions. A DisplayLink dock on a Wayland system in 2026 is not a NixOS configuration gap; it&amp;rsquo;s an upstream compatibility gap that no amount of declarative config can paper over. The right response is a $45 dock with native Alt Mode support, not a creative workaround for a proprietary graphics protocol designed to run over USB 3.0. To be fair, I could just switch away from Wayland and I&amp;rsquo;d be fine. Apparently I&amp;rsquo;ve decided that I want the small dopamine hit from buying something shiny instead.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;t14.nix&lt;/code&gt; is back to its original five lines. Nothing changed. The new dock is in the mail.&lt;/p&gt;</description></item></channel></rss>

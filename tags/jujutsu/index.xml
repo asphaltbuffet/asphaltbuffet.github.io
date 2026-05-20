@@ -1,19 +1,179 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>Jujutsu on asphaltbuffet dev blog</title>
-    <link>https://asphaltbuffet.com/tags/jujutsu/</link>
-    <description>Recent content in Jujutsu on asphaltbuffet dev blog</description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <lastBuildDate>Tue, 19 May 2026 16:48:33 -0400</lastBuildDate>
-    <atom:link href="https://asphaltbuffet.com/tags/jujutsu/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Automated Fixes for My Failures</title>
-      <link>https://asphaltbuffet.com/posts/2026/05/jj-background-fetch/</link>
-      <pubDate>Tue, 19 May 2026 20:29:52 -0400</pubDate>
-      <guid>https://asphaltbuffet.com/posts/2026/05/jj-background-fetch/</guid>
-      <description>Using automated scripts to avoid remembering to use tools correctly.</description>
-    </item>
-  </channel>
-</rss>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>asphaltbuffet dev blog – Jujutsu</title><link>https://asphaltbuffet.com/tags/jujutsu/</link><description>Recent content in Jujutsu on asphaltbuffet dev blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 19 May 2026 20:29:52 -0400</lastBuildDate><atom:link href="https://asphaltbuffet.com/tags/jujutsu/index.xml" rel="self" type="application/rss+xml"/><item><title>Automated Fixes for My Failures</title><link>https://asphaltbuffet.com/blog/jj-background-fetch/</link><pubDate>Tue, 19 May 2026 20:29:52 -0400</pubDate><guid>https://asphaltbuffet.com/blog/jj-background-fetch/</guid><description>
+&lt;p&gt;I constantly open a repo in my terminal and start making changes and then rebase at some point when I realize that I never ran &lt;code&gt;jj git fetch&lt;/code&gt; and now I have divergent changes, conflicts, etc. At some point a reasonable person stops repeating the action because they learn from their mistakes. To me, it seems like a decent reason to automate the problem away.&lt;/p&gt;
+&lt;p&gt;I might as well do some overengineering it while I&amp;rsquo;m at it.&lt;/p&gt;
+&lt;p&gt;The concept was fairly simple: run &lt;code&gt;jj git fetch --all-remotes&lt;/code&gt; in every jujutsu repo under &lt;code&gt;~/dev/&lt;/code&gt; on a schedule, without me involved. A systemd user timer felt like the right shape — it runs independently of any shell session, survives reboots, and integrates with system logging out of the box. The implementation ended up being a justafiable excuse to use &lt;code&gt;pkgs.writeShellApplication&lt;/code&gt;, which I like using whenever I can (I don&amp;rsquo;t know why). It&amp;rsquo;s good tho. I&amp;rsquo;m going to tell you about it.&lt;/p&gt;
+&lt;h2&gt;The Timer Is the Easy Part&lt;span class="hx:absolute hx:-mt-20" id="the-timer-is-the-easy-part"&gt;&lt;/span&gt;
+&lt;a href="#the-timer-is-the-easy-part" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;systemd user timers in home-manager are not bad. Two blocks in &lt;code&gt;home/modules/jj/default.nix&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nix" data-lang="nix"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;systemd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;services&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;jj-git-fetch&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Description&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Fetch all jj repos under ~/dev&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;After&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;network-online.target&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Service&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;oneshot&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;ExecStart&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="n"&gt;fetchScript&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;/bin/jj-git-fetch-all&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;systemd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;timers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;jj-git-fetch&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Unit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Description&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Periodic jj git fetch for all repos under ~/dev&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Timer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;OnBootSec&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;5m&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;OnUnitActiveSec&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;15m&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Persistent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Install&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WantedBy&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;timers.target&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;};&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;OnBootSec = &amp;quot;5m&amp;quot;&lt;/code&gt; gives the network a moment to exist before trying to do something. &lt;code&gt;OnUnitActiveSec = &amp;quot;15m&amp;quot;&lt;/code&gt; fires every fifteen minutes after that. &lt;code&gt;Persistent = true&lt;/code&gt; is probably not absolutely necessary in this case — if the laptop was asleep at the scheduled time, the timer will catch up on next boot (since this runs every 15 minutes, it&amp;rsquo;s not really saving us much here).&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;fetchScript&lt;/code&gt; is a &lt;code&gt;let&lt;/code&gt; binding pointing at the shell script package, which we&amp;rsquo;ll get to. &lt;em&gt;Spoilers&amp;hellip;&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;Look at my package!&lt;span class="hx:absolute hx:-mt-20" id="look-at-my-package"&gt;&lt;/span&gt;
+&lt;a href="#look-at-my-package" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;So, &lt;a href="https://nixos.org/manual/nixpkgs/stable/#trivial-builder-writeShellScript"target="_blank" rel="noopener"&gt;writeShellScript&lt;/a&gt; is a file, but &lt;a href="https://nixos.org/manual/nixpkgs/stable/#trivial-builder-writeShellApplication"target="_blank" rel="noopener"&gt;writeShellApplication&lt;/a&gt; is a package. Here&amp;rsquo;s where things get interesting. Nix gives you two primitives for packaging shell scripts:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;pkgs.writeShellScript&lt;/code&gt; produces a single derivation containing a script file. That&amp;rsquo;s it. You get a path you can reference. You&amp;rsquo;re responsible for making sure every tool the script calls is available at runtime, either by hard-coding store paths or hoping the environment has them. There&amp;rsquo;s no build-time validation. If the script has a syntax error or calls a tool that isn&amp;rsquo;t in &lt;code&gt;PATH&lt;/code&gt;, you find out when the script fails at runtime. Change your path later and forget about the script? Yeah, you get an error whenever that script runs&amp;hellip; yay!&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;pkgs.writeShellApplication&lt;/code&gt; produces a proper package with a &lt;code&gt;bin/&lt;/code&gt; subdirectory. When you build it, Nix automatically:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Prepends &lt;code&gt;set -euo pipefail&lt;/code&gt; — so the script fails fast on errors, unset variables, and broken pipes without you remembering to do that&lt;/li&gt;
+&lt;li&gt;Runs &lt;code&gt;shellcheck&lt;/code&gt; at &lt;em&gt;build time&lt;/em&gt; — if your script has a bug, &lt;code&gt;nix build&lt;/code&gt; fails, not the systemd unit three days later&lt;/li&gt;
+&lt;li&gt;Manages &lt;code&gt;runtimeInputs&lt;/code&gt; — tools listed there are on &lt;code&gt;$PATH&lt;/code&gt; inside the script, resolved to their store paths automatically, no hard-coding needed&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The &lt;code&gt;runtimeInputs&lt;/code&gt; pattern is quite pleasant. Instead of writing &lt;code&gt;${pkgs.fd}/bin/fd&lt;/code&gt; and &lt;code&gt;${pkgs.jujutsu}/bin/jj&lt;/code&gt; inline, you declare them:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nix" data-lang="nix"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# home/modules/jj/fetch-script.nix&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;pkgs&lt;/span&gt;&lt;span class="p"&gt;}:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;pkgs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;writeShellApplication&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;jj-git-fetch-all&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;runtimeInputs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;pkgs&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;curl&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;fd&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;systemd&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;jujutsu&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;builtins&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;readFile&lt;/span&gt; &lt;span class="sr"&gt;./jj-git-fetch.sh&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;And then the script itself just calls &lt;code&gt;fd&lt;/code&gt;, &lt;code&gt;jj&lt;/code&gt;, &lt;code&gt;curl&lt;/code&gt;, &lt;code&gt;systemd-cat&lt;/code&gt; — short names, no store paths, the way you&amp;rsquo;d write a script for any system (and makes importing scripts really seamless). The derivation takes care of resolving them.&lt;/p&gt;
+&lt;p&gt;I split the package definition into its own file (&lt;code&gt;fetch-script.nix&lt;/code&gt;) and referenced it from &lt;code&gt;default.nix&lt;/code&gt; via &lt;code&gt;import ./fetch-script.nix {inherit pkgs;}&lt;/code&gt;. Simple, not &lt;code&gt;callPackage&lt;/code&gt; — the package only needs &lt;code&gt;pkgs&lt;/code&gt;, so pulling in the full overlay machinery would be overkill.&lt;/p&gt;
+&lt;h2&gt;Finding my point (and some repos)&lt;span class="hx:absolute hx:-mt-20" id="finding-my-point-and-some-repos"&gt;&lt;/span&gt;
+&lt;a href="#finding-my-point-and-some-repos" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The script uses &lt;code&gt;fd&lt;/code&gt; to discover the appropriate repos by looking for &lt;code&gt;.jj/&lt;/code&gt; directories:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;repos&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;fd --type d --hidden --no-ignore &lt;span class="s1"&gt;&amp;#39;^\.jj$&amp;#39;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;&lt;span class="s2"&gt;/dev&amp;#34;&lt;/span&gt; 2&amp;gt;/dev/null &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="nb"&gt;read&lt;/span&gt; -r jjdir&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; dirname &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$jjdir&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;done)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;fd '^\.jj$'&lt;/code&gt; finds directories named exactly &lt;code&gt;.jj&lt;/code&gt; (regex anchored at both ends), anywhere under &lt;code&gt;~/dev/&lt;/code&gt;, including nested paths. &lt;code&gt;dirname&lt;/code&gt; walks each result up one level to get the repo root. This handles repos at any depth without knowing the naming convention in advance — a flat &lt;code&gt;~/dev/foo/&lt;/code&gt;, a grouped &lt;code&gt;~/dev/work/client/project/&lt;/code&gt;, whatever.&lt;/p&gt;
+&lt;p&gt;The alternative would be a glob like &lt;code&gt;~/dev/*/&lt;/code&gt;, which only finds repos one level deep and relies on a consistent directory structure.&lt;/p&gt;
+&lt;p&gt;I could probably collapse the whole discovery-and-fetch loop into a single &lt;code&gt;fd&lt;/code&gt; invocation using &lt;code&gt;-x&lt;/code&gt; to run &lt;code&gt;jj git fetch&lt;/code&gt; once per result — something like &lt;code&gt;fd --type d --hidden --no-ignore '^\.jj$' &amp;quot;$HOME/dev&amp;quot; -x jj --repository '{//}' git fetch --all-remotes&lt;/code&gt;. Cleaner, no &lt;code&gt;while&lt;/code&gt; loop, no intermediate variable. I didn&amp;rsquo;t feel like debugging &lt;code&gt;fd&lt;/code&gt;&amp;rsquo;s placeholder syntax at the time, and the loop works fine. I&amp;rsquo;m not really doing this to learn something today.&lt;/p&gt;
+&lt;h2&gt;The Network Check: Good Enough&lt;span class="hx:absolute hx:-mt-20" id="the-network-check-good-enough"&gt;&lt;/span&gt;
+&lt;a href="#the-network-check-good-enough" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Before doing anything, the script checks whether GitHub is reachable:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; ! curl --silent --head --fail --max-time &lt;span class="m"&gt;5&lt;/span&gt; https://github.com &amp;gt; /dev/null 2&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;1&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;jj-git-fetch: network unavailable or github unreachable, skipping&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; systemd-cat -t jj-git-fetch -p info
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Note &lt;code&gt;exit 0&lt;/code&gt; — the unit exits clean when the network is down. That&amp;rsquo;s intentional. A failed unit shows up as failed in &lt;code&gt;systemctl --user status jj-git-fetch&lt;/code&gt;, and I don&amp;rsquo;t want to stare at red text every morning just because the service fired before the VPN connected. If GitHub is unreachable, the right move is to quietly skip and try again in fifteen minutes.&lt;/p&gt;
+&lt;p&gt;The check is specifically for GitHub and not a generic connectivity check (pinging 8.8.8.8, say) because fetching is only useful if the remote is reachable. A working LAN connection with no internet access would pass a generic ping and then immediately fail on every &lt;code&gt;jj git fetch&lt;/code&gt;. This way the check and the work are testing the same thing.&lt;/p&gt;
+&lt;h2&gt;Per-Repo Logging and Failure Tracking&lt;span class="hx:absolute hx:-mt-20" id="per-repo-logging-and-failure-tracking"&gt;&lt;/span&gt;
+&lt;a href="#per-repo-logging-and-failure-tracking" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;failed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="nv"&gt;IFS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;read&lt;/span&gt; -r repo&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;jj-git-fetch: fetching &lt;/span&gt;&lt;span class="nv"&gt;$repo&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; systemd-cat -t jj-git-fetch -p info
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; ! jj --repository &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$repo&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt; git fetch --all-remotes 2&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; systemd-cat -t jj-git-fetch -p info&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;jj-git-fetch: FAILED for &lt;/span&gt;&lt;span class="nv"&gt;$repo&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; systemd-cat -t jj-git-fetch -p err
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;failed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;done&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$repos&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$failed&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Each repo gets its own log lines at &lt;code&gt;info&lt;/code&gt; priority. Failures are logged at &lt;code&gt;err&lt;/code&gt; priority, which means they show up more prominently in &lt;code&gt;journalctl --user -t jj-git-fetch -p err&lt;/code&gt;. The script continues through all repos regardless — a failure in one shouldn&amp;rsquo;t skip the others. If any repo failed, the overall exit code is nonzero, which marks the systemd unit as failed and makes the problem visible in &lt;code&gt;systemctl --user status&lt;/code&gt;. Yes, this could get noisy. No, I don&amp;rsquo;t care right now.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;journalctl --user -t jj-git-fetch&lt;/code&gt; gives a clean view of just this service&amp;rsquo;s output, timestamped, across all runs.&lt;/p&gt;
+&lt;h2&gt;The 1Password Detour&lt;span class="hx:absolute hx:-mt-20" id="the-1password-detour"&gt;&lt;/span&gt;
+&lt;a href="#the-1password-detour" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In an earlier attempt, I tried a pre-check: &lt;code&gt;op whoami&lt;/code&gt;, to see if 1Password was authenticated before attempting fetches. The idea was that I use SSH keys managed by 1Password&amp;rsquo;s SSH agent, so if 1Password wasn&amp;rsquo;t running, the fetch would fail anyway.&lt;/p&gt;
+&lt;p&gt;Not quite the right approach though: &lt;code&gt;op whoami&lt;/code&gt; returns nonzero unless the 1Password desktop app is fully signed in, but even when executing &lt;code&gt;jj git fetch&lt;/code&gt; manually was fine, the check failed. I just got rid of the check and figured if a fetch fails because auth isn&amp;rsquo;t available, it can log the failure per-repo and move on. That&amp;rsquo;s a better signal than a blanket early exit based on a condition that wasn&amp;rsquo;t actually relevant.&lt;/p&gt;
+&lt;h2&gt;It Works&lt;span class="hx:absolute hx:-mt-20" id="it-works"&gt;&lt;/span&gt;
+&lt;a href="#it-works" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ systemctl --user list-timers --all
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;NEXT LEFT LAST PASSED UNIT
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Mon 2026-05-19 20:02:47 EDT 13min Mon 2026-05-19 19:47:47 EDT 1min ago jj-git-fetch.timer&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ journalctl --user -t jj-git-fetch
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;May &lt;span class="m"&gt;19&lt;/span&gt; 19:47:47 wendigo jj-git-fetch&lt;span class="o"&gt;[&lt;/span&gt;12053&lt;span class="o"&gt;]&lt;/span&gt;: jj-git-fetch: fetching /home/grue/dev/blog
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;May &lt;span class="m"&gt;19&lt;/span&gt; 19:47:49 wendigo jj-git-fetch&lt;span class="o"&gt;[&lt;/span&gt;12053&lt;span class="o"&gt;]&lt;/span&gt;: jj-git-fetch: fetching /home/grue/dev/nix-config
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;May &lt;span class="m"&gt;19&lt;/span&gt; 19:47:52 wendigo jj-git-fetch&lt;span class="o"&gt;[&lt;/span&gt;12053&lt;span class="o"&gt;]&lt;/span&gt;: jj-git-fetch: fetching /home/grue/dev/wherehouse&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Repos fetched, no intervention required, logs readable via &lt;code&gt;journalctl&lt;/code&gt;. The timer fires, does its thing, and disappears. Next run in thirteen minutes.&lt;/p&gt;</description></item></channel></rss>

@@ -1,19 +1,84 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>Claude-Code on asphaltbuffet dev blog</title>
-    <link>https://asphaltbuffet.com/tags/claude-code/</link>
-    <description>Recent content in Claude-Code on asphaltbuffet dev blog</description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <lastBuildDate>Wed, 13 May 2026 18:36:20 -0400</lastBuildDate>
-    <atom:link href="https://asphaltbuffet.com/tags/claude-code/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Rooting around in .local/bin</title>
-      <link>https://asphaltbuffet.com/posts/2026/05/nixos-local-bin-path/</link>
-      <pubDate>Tue, 12 May 2026 00:00:00 -0400</pubDate>
-      <guid>https://asphaltbuffet.com/posts/2026/05/nixos-local-bin-path/</guid>
-      <description>&lt;p&gt;Claude Code&amp;rsquo;s &lt;code&gt;/doctor&lt;/code&gt; command told me &lt;code&gt;~/.local/bin&lt;/code&gt; wasn&amp;rsquo;t in my &lt;code&gt;PATH&lt;/code&gt;. That&amp;rsquo;s where it installs its native binary. Simple fix, right?&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>asphaltbuffet dev blog – Claude-Code</title><link>https://asphaltbuffet.com/tags/claude-code/</link><description>Recent content in Claude-Code on asphaltbuffet dev blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 12 May 2026 00:00:00 -0400</lastBuildDate><atom:link href="https://asphaltbuffet.com/tags/claude-code/index.xml" rel="self" type="application/rss+xml"/><item><title>Rooting around in .local/bin</title><link>https://asphaltbuffet.com/blog/nixos-local-bin-path/</link><pubDate>Tue, 12 May 2026 00:00:00 -0400</pubDate><guid>https://asphaltbuffet.com/blog/nixos-local-bin-path/</guid><description>
+&lt;p&gt;Claude Code&amp;rsquo;s &lt;code&gt;/doctor&lt;/code&gt; command told me &lt;code&gt;~/.local/bin&lt;/code&gt; wasn&amp;rsquo;t in my &lt;code&gt;PATH&lt;/code&gt;. That&amp;rsquo;s where it installs its native binary. Simple fix, right?&lt;/p&gt;
+&lt;p&gt;The symptom was easy to reproduce: open a new shell, run &lt;code&gt;echo $PATH&lt;/code&gt;, and &lt;code&gt;~/.local/bin&lt;/code&gt; is nowhere in there. Claude Code was installed fine; it just couldn&amp;rsquo;t find itself.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;d just make sure that the path was configured in my &lt;code&gt;.zshrc&lt;/code&gt; and all would be good. Since it&amp;rsquo;s NixOS, the obvious fix from home-manager was with &lt;code&gt;home.sessionPath&lt;/code&gt;. One line in &lt;code&gt;home/roles/base.nix&lt;/code&gt;, rebuild, done:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nix" data-lang="nix"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;home&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sessionPath&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;$HOME/.local/bin&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;];&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Tried it. Rebuilt. Ran &lt;code&gt;exec zsh&lt;/code&gt;. Opened Claude Code. Ran &lt;code&gt;/doctor&lt;/code&gt;. Still broken.&lt;/p&gt;
+&lt;h2&gt;In Which I Learn How NixOS Boots a Shell&lt;span class="hx:absolute hx:-mt-20" id="in-which-i-learn-how-nixos-boots-a-shell"&gt;&lt;/span&gt;
+&lt;a href="#in-which-i-learn-how-nixos-boots-a-shell" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Ok, so NixOS generates a script called &lt;code&gt;set-environment&lt;/code&gt; at build time. You can find the one currently running your shell at something like &lt;code&gt;/nix/store/&amp;lt;hash&amp;gt;-set-environment&lt;/code&gt;. It gets sourced via &lt;code&gt;/etc/zshenv&lt;/code&gt; on every shell start, and it does this:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;&lt;span class="s2"&gt;/.nix-profile/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/bin&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;A hard &lt;code&gt;export PATH=&lt;/code&gt;. Not &lt;code&gt;PATH=&amp;quot;something:$PATH&amp;quot;&lt;/code&gt;. A fresh path every time. Usually a good thing to prevent cruft building up, but now important stuff was missing.&lt;/p&gt;
+&lt;p&gt;home-manager&amp;rsquo;s &lt;code&gt;hm-session-vars.sh&lt;/code&gt; — which &lt;strong&gt;does&lt;/strong&gt; correctly add &lt;code&gt;~/.local/bin&lt;/code&gt; — runs &lt;em&gt;before&lt;/em&gt; &lt;code&gt;/etc/zshenv&lt;/code&gt;. So it sets the path, and then NixOS immediately resets it. The entry is right there in &lt;code&gt;hm-session-vars.sh&lt;/code&gt; if you go looking:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;&lt;span class="s2"&gt;/.local/bin&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="p"&gt;:+:&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="nv"&gt;$PATH&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Was this documented anywhere obvious? I mean, &lt;em&gt;probably&lt;/em&gt;, but I didn&amp;rsquo;t do a lot of investigation.&lt;/p&gt;
+&lt;h2&gt;The Actual Fix&lt;span class="hx:absolute hx:-mt-20" id="the-actual-fix"&gt;&lt;/span&gt;
+&lt;a href="#the-actual-fix" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Searching online got me to a better option pretty quickly: NixOS has &lt;a href="https://search.nixos.org/options?query=localBinInPath"target="_blank" rel="noopener"&gt;&lt;code&gt;environment.localBinInPath&lt;/code&gt;&lt;/a&gt;. Setting it to &lt;code&gt;true&lt;/code&gt; injects &lt;code&gt;~/.local/bin&lt;/code&gt; directly into the &lt;code&gt;set-environment&lt;/code&gt; script, so it survives the reset.&lt;/p&gt;
+&lt;p&gt;One line in &lt;code&gt;nixos/profiles/base.nix&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nix" data-lang="nix"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;environment&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;localBinInPath&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Rebuild. New shell. &lt;code&gt;~/.local/bin&lt;/code&gt; is in &lt;code&gt;$PATH&lt;/code&gt;. Claude Code&amp;rsquo;s &lt;code&gt;/doctor&lt;/code&gt; command goes quiet. Mission accomplished.&lt;/p&gt;
+&lt;h2&gt;Onions and Parfaits&lt;span class="hx:absolute hx:-mt-20" id="onions-and-parfaits"&gt;&lt;/span&gt;
+&lt;a href="#onions-and-parfaits" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;There are layers here I didn&amp;rsquo;t consider, and the lesson isn&amp;rsquo;t subtle: on NixOS, if something isn&amp;rsquo;t in the &lt;code&gt;PATH&lt;/code&gt; that &lt;code&gt;set-environment&lt;/code&gt; builds, it isn&amp;rsquo;t in your &lt;code&gt;PATH&lt;/code&gt;. Full stop. home-manager&amp;rsquo;s &lt;code&gt;sessionPath&lt;/code&gt;, &lt;code&gt;sessionVariables&lt;/code&gt;, anything in &lt;code&gt;hm-session-vars.sh&lt;/code&gt; — all of it happens &lt;em&gt;before&lt;/em&gt; the hard reset. Anything you want to survive has to come from the NixOS level.&lt;/p&gt;
+&lt;p&gt;Was &lt;code&gt;home.sessionPath&lt;/code&gt; the wrong tool? Yes. Would I have tried it first anyway? Also, yes.&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$PATH&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; tr &lt;span class="s1"&gt;&amp;#39;:&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;\n&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep &lt;span class="nb"&gt;local&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/home/grue/.local/bin&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Good enough.&lt;/p&gt;</description></item></channel></rss>

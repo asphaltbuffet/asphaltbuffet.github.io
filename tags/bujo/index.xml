@@ -1,19 +1,268 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>Bujo on asphaltbuffet dev blog</title>
-    <link>https://asphaltbuffet.com/tags/bujo/</link>
-    <description>Recent content in Bujo on asphaltbuffet dev blog</description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <lastBuildDate>Wed, 06 May 2026 10:40:50 -0400</lastBuildDate>
-    <atom:link href="https://asphaltbuffet.com/tags/bujo/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Obsidian Configuration</title>
-      <link>https://asphaltbuffet.com/posts/2022/07/obsidian-setup/</link>
-      <pubDate>Sun, 03 Jul 2022 11:43:28 -0400</pubDate>
-      <guid>https://asphaltbuffet.com/posts/2022/07/obsidian-setup/</guid>
-      <description>&lt;p&gt;Here is the setup I&amp;rsquo;ve been using in &lt;a href=&#34;https://obsidian.md/&#34;&gt;Obsidian&lt;/a&gt; since late March 2022. The default plugins and configuration would provide most of the functionality I want. However, I tweaked a few things to add more value than my &lt;a href=&#34;https://bulletjournal.com/&#34;&gt;Bullet Journal&lt;/a&gt; could provide.&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>asphaltbuffet dev blog – Bujo</title><link>https://asphaltbuffet.com/tags/bujo/</link><description>Recent content in Bujo on asphaltbuffet dev blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 03 Jul 2022 22:04:03 -0400</lastBuildDate><atom:link href="https://asphaltbuffet.com/tags/bujo/index.xml" rel="self" type="application/rss+xml"/><item><title>Obsidian: Daily Notes</title><link>https://asphaltbuffet.com/blog/daily-notes/</link><pubDate>Sun, 03 Jul 2022 22:04:03 -0400</pubDate><guid>https://asphaltbuffet.com/blog/daily-notes/</guid><description>
+&lt;p&gt;I love &lt;a href="https://bulletjournal.com/"target="_blank" rel="noopener"&gt;Bullet Journaling&lt;/a&gt;. It has added a much-needed structure to my days and helped prevent essential things from falling through the cracks. However, it&amp;rsquo;s not always easy to switch back and forth to a written journal when my work is all digital. I also wanted a way to track script snippets in my journal so that I could easily copy-pasta later on when I needed to repeat actions from a previous day. I needed a way to digitize &lt;em&gt;some&lt;/em&gt; of my daily journal entries without the arduous task of completely duplicating my writing.&lt;/p&gt;
+&lt;h2&gt;Requirements&lt;span class="hx:absolute hx:-mt-20" id="requirements"&gt;&lt;/span&gt;
+&lt;a href="#requirements" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Plain ol&amp;rsquo; vanilla Obsidian wasn&amp;rsquo;t going to cut it here. The following examples rely on the following plugins&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Templater&lt;/li&gt;
+&lt;li&gt;Admonitions&lt;/li&gt;
+&lt;li&gt;Icon Shortcodes&lt;/li&gt;
+&lt;li&gt;Tasks&lt;/li&gt;
+&lt;li&gt;Dataview&lt;/li&gt;
+&lt;li&gt;Periodic Notes&lt;/li&gt;
+&lt;li&gt;Calendar&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Creating the files&lt;span class="hx:absolute hx:-mt-20" id="creating-the-files"&gt;&lt;/span&gt;
+&lt;a href="#creating-the-files" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I use Periodic Notes with Calendar to automatically create daily notes in my vault. The appropriate file is made in the right place by clicking on the current day (or previous days if I need to create retroactive entries). Calendar is essentially a UI for Periodic Notes in this case.&lt;/p&gt;
+&lt;h3&gt;Periodic Notes&lt;span class="hx:absolute hx:-mt-20" id="periodic-notes"&gt;&lt;/span&gt;
+&lt;a href="#periodic-notes" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The Periodic Notes plugin defines the title of a daily note file (.md). This needs to stay consistent, or you&amp;rsquo;ll be renaming files later so that the system links properly. I recommend thinking about this part the most at the beginning. Most other settings can be tweaked and refined; this one is essentially immutable.&lt;/p&gt;
+&lt;div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200"&gt;
+&lt;div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"&gt;&lt;svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/&gt;&lt;/svg&gt;&lt;/div&gt;
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7"&gt;
+&lt;div class="hx:mt-6 hx:leading-7 hx:first:mt-0"&gt;Do not set up the templating in Periodic Notes if you&amp;rsquo;ll be using folder templates in Templater. This may cause unexpected issues When repeating template evaluation.&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Date Formats&lt;span class="hx:absolute hx:-mt-20" id="date-formats"&gt;&lt;/span&gt;
+&lt;a href="#date-formats" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;I changed most date formatting to match the same format in my written journal:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Daily&lt;/strong&gt;: &lt;code&gt;YYY.MM.DD - ddd&lt;/code&gt; &lt;em&gt;&amp;ldquo;2022.07.05 - Tue&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Weekly&lt;/strong&gt;: &lt;code&gt;gggg-[W]ww&lt;/code&gt; &lt;em&gt;&amp;ldquo;2022-W28&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Monthly&lt;/strong&gt;: &lt;code&gt;YYYY-MM&lt;/code&gt; &lt;em&gt;&amp;ldquo;2022-07&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Quarterly&lt;/strong&gt;: not configured/enabled; I haven&amp;rsquo;t found a use for quarterly notes yet&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Yearly&lt;/strong&gt;: &lt;code&gt;YYYY&lt;/code&gt; &lt;em&gt;&amp;ldquo;2022&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Templater&lt;span class="hx:absolute hx:-mt-20" id="templater"&gt;&lt;/span&gt;
+&lt;a href="#templater" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Regardless of what creates the daily entry, I want all files in my notes section to have the proper format. To do this, I set folder templates in Templater and trigger Templater on new file creation.&lt;/p&gt;
+&lt;figure&gt;&lt;img src="https://asphaltbuffet.com/blog/daily-notes/folder-templates.png"
+alt="Folder templates configured in Templater"&gt;
+&lt;/figure&gt;
+&lt;p&gt;In my vault, all periodic notes are in the &lt;code&gt;20-periodic-notes&lt;/code&gt; directory. There are sub-directories for daily (&lt;code&gt;21-daily&lt;/code&gt;), weekly (&lt;code&gt;22-weekly&lt;/code&gt;), etc.&lt;/p&gt;
+&lt;h2&gt;Frontmatter&lt;span class="hx:absolute hx:-mt-20" id="frontmatter"&gt;&lt;/span&gt;
+&lt;a href="#frontmatter" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nn"&gt;---&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;date created&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;&amp;lt;% tp.file.creation_date(&amp;#39;dddd, MMMM Do, YYYY h:mm:ss a&amp;#39;) %&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;date modified&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;&amp;lt;% tp.date.now(&amp;#39;dddd, MMMM Do, YYYY h:mm:ss a&amp;#39;) %&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;aliases&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;&amp;lt;%*&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;var fileDate = moment(tp.file.title, &amp;#39;YYYY.MM.DD - ddd&amp;#39;);&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;// moment dates are mutable &lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;let prevDay = moment(fileDate).subtract(1, &amp;#39;d&amp;#39;).format(&amp;#39;YYYY.MM.DD - ddd&amp;#39;);&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;let nextDay = moment(fileDate).add(1, &amp;#39;d&amp;#39;).format(&amp;#39;YYYY.MM.DD - ddd&amp;#39;);&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;let yearLink = fileDate.format(&amp;#39;YYYY&amp;#39;);&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;let quarterLink = fileDate.format(&amp;#39;YYYY-[Q]Q&amp;#39;);&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;let monthLink = fileDate.format(&amp;#39;YYYY-MM&amp;#39;);&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="l"&gt;let weekLink = fileDate.format(&amp;#39;gggg-[W]ww&amp;#39;); &lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-&lt;span class="l"&gt;%&amp;gt; &amp;#34;&amp;lt;% tp.file.title %&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;tags&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;daily_note &amp;lt;% fileDate.format(&amp;#34;YYYYMMDD&amp;#34;) %&amp;gt; &amp;lt;% weekLink %&amp;gt; &amp;lt;% monthLink %&amp;gt; &amp;lt;% quarterLink %&amp;gt; &amp;lt;% yearLink %&amp;gt; &lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;tracking&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;&amp;lt;% tp.system.prompt(&amp;#34;Sleep (hrs):&amp;#34;, &amp;#34;0&amp;#34;, false) %&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;&amp;lt;% tp.file.title %&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nn"&gt;---&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;A &lt;strong&gt;lot&lt;/strong&gt; is going on here to set up the meta-information for each daily note.&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;date created&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;&amp;lt;% tp.file.creation_date(&amp;#39;dddd, MMMM Do, YYYY h:mm:ss a&amp;#39;) %&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If we start by looking at the first line, the power of Templater gets to show off a bit here.&lt;/p&gt;
+&lt;h2&gt;Full Daily Template&lt;span class="hx:absolute hx:-mt-20" id="full-daily-template"&gt;&lt;/span&gt;
+&lt;a href="#full-daily-template" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;---
+date created: &amp;lt;% tp.file.creation_date(&amp;#39;dddd, MMMM Do, YYYY h:mm:ss a&amp;#39;) %&amp;gt;
+date modified: &amp;lt;% tp.date.now(&amp;#39;dddd, MMMM Do, YYYY h:mm:ss a&amp;#39;) %&amp;gt;
+aliases: &amp;lt;%*
+var fileDate = moment(tp.file.title, &amp;#39;YYYY.MM.DD - ddd&amp;#39;);
+// moment dates are mutable
+let prevDay = moment(fileDate).subtract(1, &amp;#39;d&amp;#39;).format(&amp;#39;YYYY.MM.DD - ddd&amp;#39;);
+let nextDay = moment(fileDate).add(1, &amp;#39;d&amp;#39;).format(&amp;#39;YYYY.MM.DD - ddd&amp;#39;);
+let yearLink = fileDate.format(&amp;#39;YYYY&amp;#39;);
+let quarterLink = fileDate.format(&amp;#39;YYYY-[Q]Q&amp;#39;);
+let monthLink = fileDate.format(&amp;#39;YYYY-MM&amp;#39;);
+let weekLink = fileDate.format(&amp;#39;gggg-[W]ww&amp;#39;);
+-%&amp;gt; &amp;#34;&amp;lt;% tp.file.title %&amp;gt;&amp;#34;
+tags: daily_note &amp;lt;% fileDate.format(&amp;#34;YYYYMMDD&amp;#34;) %&amp;gt; &amp;lt;% weekLink %&amp;gt; &amp;lt;% monthLink %&amp;gt; &amp;lt;% quarterLink %&amp;gt; &amp;lt;% yearLink %&amp;gt;
+tracking:
+sleep: &amp;lt;% tp.system.prompt(&amp;#34;Sleep (hrs):&amp;#34;, &amp;#34;0&amp;#34;, false) %&amp;gt;
+title: &amp;lt;% tp.file.title %&amp;gt;
+---
+&amp;lt;%*
+// ❮❮ ⋮ 2021 › Q4 › 12 › W49 ⋮ ❯❯
+// [[path/to/file|display_text]]
+let navStr = `[[20-periodic-notes/21-daily/${prevDay}|❮❮]] ⋮ [[20-periodic-notes/25-yearly/${yearLink}|${yearLink}]] › [[20-periodic-notes/24-quarterly/${quarterLink}|${fileDate.format(&amp;#39;[Q]Q&amp;#39;)}]] › [[20-periodic-notes/23-monthly/${monthLink}|${fileDate.format(&amp;#39;MMM&amp;#39;)}]] › [[20-periodic-notes/22-weekly/${weekLink}|${fileDate.format(&amp;#39;[W]ww&amp;#39;)}]] ⋮ [[20-periodic-notes/21-daily/${nextDay}|❯❯]]`;
+tR &amp;#43;= navStr
+%&amp;gt;
+# &amp;lt;% tp.file.title %&amp;gt;
+## :fas_calendar_check: Agenda
+&amp;gt; [!calendar]&amp;#43;
+&amp;gt; ![[&amp;lt;% moment(fileDate).format(&amp;#39;YYYY-MM&amp;#39;) %&amp;gt;#^&amp;lt;% moment(fileDate).format(&amp;#39;YYYYMMDD&amp;#39;) %&amp;gt;]]
+## :fas_list_check: Tasks
+&amp;gt; [!overdue]&amp;#43;
+&amp;gt; ```tasks
+&amp;gt; not done
+&amp;gt; due before &amp;lt;% fileDate.format(&amp;#39;YYYY-MM-DD&amp;#39;) %&amp;gt;
+&amp;gt; ```
+&amp;gt; [!unfinished]&amp;#43;
+&amp;gt;
+&amp;gt;```tasks
+&amp;gt; not done
+&amp;gt;
+&amp;gt; due on &amp;lt;% moment(fileDate).format(&amp;#39;YYYY-MM-DD&amp;#39;) %&amp;gt;
+&amp;gt;
+&amp;gt; short mode
+&amp;gt; ```
+&amp;gt; [!due-soon]-
+&amp;gt;
+&amp;gt;```tasks
+&amp;gt; not done
+&amp;gt;
+&amp;gt; due after &amp;lt;% moment(fileDate).format(&amp;#39;YYYY-MM-DD&amp;#39;) %&amp;gt;
+&amp;gt; due before &amp;lt;% moment(fileDate).add(1, &amp;#39;w&amp;#39;).format(&amp;#39;YYYY-MM-DD&amp;#39;) %&amp;gt;
+&amp;gt;
+&amp;gt; short mode
+&amp;gt; ```
+## :fas_pen_nib: Notes
+- …
+^notes-link&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;I talk more about my setup in a &lt;a href="https://asphaltbuffet.com/blog/obsidian-setup/"&gt;previous post&lt;/a&gt;&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description></item><item><title>Obsidian Configuration</title><link>https://asphaltbuffet.com/blog/obsidian-setup/</link><pubDate>Sun, 03 Jul 2022 11:43:28 -0400</pubDate><guid>https://asphaltbuffet.com/blog/obsidian-setup/</guid><description>
+&lt;p&gt;Here is the setup I&amp;rsquo;ve been using in &lt;a href="https://obsidian.md/"target="_blank" rel="noopener"&gt;Obsidian&lt;/a&gt; since late March 2022. The default plugins and configuration would provide most of the functionality I want. However, I tweaked a few things to add more value than my &lt;a href="https://bulletjournal.com/"target="_blank" rel="noopener"&gt;Bullet Journal&lt;/a&gt; could provide.&lt;/p&gt;
+&lt;h2&gt;Plugins&lt;span class="hx:absolute hx:-mt-20" id="plugins"&gt;&lt;/span&gt;
+&lt;a href="#plugins" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I use quite a few plugins and have most of them configured uniquely. There are a few negatives to this approach:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;load time for obsidian is slow&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;keeping track of plugins is a bit of a pain&lt;/li&gt;
+&lt;li&gt;must manually synchronize/manage installed plugins&lt;sup id="fnref:2"&gt;&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That said, I&amp;rsquo;m happy with the current configuration.&lt;/p&gt;
+&lt;h3&gt;Admonition&lt;span class="hx:absolute hx:-mt-20" id="admonition"&gt;&lt;/span&gt;
+&lt;a href="#admonition" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/valentine195/obsidian-admonition"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/valentine195/obsidian-admonition?label=admonition%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest by date)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ve added a few custom admonition types.&lt;/p&gt;
+&lt;p&gt;These get used for daily/weekly/monthly notes when organizing my to-do lists. They also are a way to wrap information in correspondence tracking so that I can highlight important details. While not absolutely necessary, they are helpful and make the journaling look better organized.&lt;/p&gt;
+&lt;h3&gt;Advanced Tables&lt;span class="hx:absolute hx:-mt-20" id="advanced-tables"&gt;&lt;/span&gt;
+&lt;a href="#advanced-tables" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/tgrosinger/advanced-tables-obsidian"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/tgrosinger/advanced-tables-obsidian?label=advanced%20tables%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I use advanced tables so that I can be lazier when writing up information in journals. It auto-sizes the header to match the width of cell content. I used to do this manually by copy-pasta with &lt;a href="https://prettier.io/playground/"target="_blank" rel="noopener"&gt;Prettier&lt;/a&gt;, but now I keep that all in the journal entry.&lt;/p&gt;
+&lt;h3&gt;Calendar&lt;span class="hx:absolute hx:-mt-20" id="calendar"&gt;&lt;/span&gt;
+&lt;a href="#calendar" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/liamcain/obsidian-calendar-plugin"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/liamcain/obsidian-calendar-plugin?label=Calendar%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I use this plugin extensively, multiple times a day. Not only does it give an easy way to move through daily logging, but it also makes it easier to create &lt;a href="#periodic-notes"&gt;periodic entries&lt;/a&gt; for weeks and months. While keyboard shortcuts can get me similar behavior, some days, I just want to use the mouse.&lt;/p&gt;
+&lt;p&gt;The only change that I made to the settings for this plugin was to show week numbers in a separate column. I use weekly notes to track my finished tasks for use in status meetings and other times when I want to skim through past accomplishments.&lt;/p&gt;
+&lt;h3&gt;Dataview&lt;span class="hx:absolute hx:-mt-20" id="dataview"&gt;&lt;/span&gt;
+&lt;a href="#dataview" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/blacksmithgu/obsidian-dataview"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/blacksmithgu/obsidian-dataview?label=dataview%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Rarely used by itself, this is necessary for &lt;a href="#templater"&gt;templates&lt;/a&gt;, &lt;a href="#heatmap-calendar"&gt;heatmaps&lt;/a&gt;, and &lt;a href="#tasks"&gt;task lists&lt;/a&gt;. I enabled javascript queries to allow some other plugin functionality, but did not otherwise make any changes.&lt;/p&gt;
+&lt;h3&gt;Dynamic Table of Contents&lt;span class="hx:absolute hx:-mt-20" id="dynamic-table-of-contents"&gt;&lt;/span&gt;
+&lt;a href="#dynamic-table-of-contents" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/aidurber/obsidian-plugin-dynamic-toc"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/aidurber/obsidian-plugin-dynamic-toc?label=dynamic%20TOC%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I have a few ToCs scattered throughout my journal. I generate most index lists in &lt;a href="#dataview"&gt;Dataview&lt;/a&gt;, so this is more of a nice-to-have. It is much more helpful when using Obsidian to draft other documents. I can keep the ToC updated automatically, then export that markdown file into another application without fiddling with some other editor&amp;rsquo;s ToC generation options.&lt;/p&gt;
+&lt;h3&gt;Footnote Shortcut&lt;span class="hx:absolute hx:-mt-20" id="footnote-shortcut"&gt;&lt;/span&gt;
+&lt;a href="#footnote-shortcut" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/MichaBrugger/obsidian-footnotes"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/MichaBrugger/obsidian-footnotes?label=footnote%20shortcut%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;An easy way to create/edit/return from footnotes. I set my hotkey (done manually) to be &lt;code&gt;CMD&lt;/code&gt; + &lt;code&gt;SHIFT&lt;/code&gt; + &lt;code&gt;6&lt;/code&gt;. It&amp;rsquo;s the same shortcut as noted in the plugin documentation. Their reasoning made sense to me, and I didn&amp;rsquo;t want to think about it much more.&lt;/p&gt;
+&lt;h3&gt;Heatmap Calendar&lt;span class="hx:absolute hx:-mt-20" id="heatmap-calendar"&gt;&lt;/span&gt;
+&lt;a href="#heatmap-calendar" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/tgrosinger/advanced-tables-obsidian"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/tgrosinger/advanced-tables-obsidian?label=advanced%20tables%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The only heatmaps in my journal are two yearly trackers on my year pages. They aren&amp;rsquo;t really important or even that useful, but they look nice, so I keep this plugin around. If it gets updated to show monthly heatmaps, I have a few more items I&amp;rsquo;d like to track at that granularity.&lt;/p&gt;
+&lt;p&gt;There&amp;rsquo;s no configuration for this plugin, but I did change the date format for it to work since my daily entries do not follow the &lt;code&gt;YYYY-MM-DD&lt;/code&gt; format.&lt;/p&gt;
+&lt;h3&gt;Icon Folder&lt;span class="hx:absolute hx:-mt-20" id="icon-folder"&gt;&lt;/span&gt;
+&lt;a href="#icon-folder" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/FlorianWoelki/obsidian-icon-folder"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/FlorianWoelki/obsidian-icon-folder?label=icon%20folder%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;It gives me visual reminders of folder contents and nothing else. Not really needed, but pretty, so it stays around.&lt;/p&gt;
+&lt;h3&gt;Icon Shortcodes&lt;span class="hx:absolute hx:-mt-20" id="icon-shortcodes"&gt;&lt;/span&gt;
+&lt;a href="#icon-shortcodes" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/aidenlx/obsidian-icon-shortcodes"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/aidenlx/obsidian-icon-shortcodes?label=icon%20shortcodes%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Most headers in my daily notes have an icon for recognition and visual appeal. Not required, but if I remove it now, I&amp;rsquo;d need to remove all the references from previous entries.&lt;/p&gt;
+&lt;h3&gt;Linter&lt;span class="hx:absolute hx:-mt-20" id="linter"&gt;&lt;/span&gt;
+&lt;a href="#linter" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/platers/obsidian-linter"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/platers/obsidian-linter?label=linter%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I configured this plugin more than most others. I have it set to lint when I save (&lt;code&gt;CTRL&lt;/code&gt; + &lt;code&gt;S&lt;/code&gt;) a file. I also configured it to ignore my template folder as the linter should not modify those files while template fields are present. I don&amp;rsquo;t remember which settings I&amp;rsquo;ve tweaked for linting. I sync this setting in github, so my style remains consistent across instances.&lt;/p&gt;
+&lt;h3&gt;Natural Language Dates&lt;span class="hx:absolute hx:-mt-20" id="natural-language-dates"&gt;&lt;/span&gt;
+&lt;a href="#natural-language-dates" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/argenos/nldates-obsidian"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/argenos/nldates-obsidian?label=natural%20language%20dates%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Rarely used, this plugin is most likely to get removed from my set-up at some point. I keep it around at the moment so that I don&amp;rsquo;t have to think when I want to link to &lt;code&gt;@tomorrow&lt;/code&gt; or &lt;code&gt;@yesterday&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I updated the date format to match my periodic note format and configured it to add the dates as a link.&lt;/p&gt;
+&lt;h3&gt;Note Refactor&lt;span class="hx:absolute hx:-mt-20" id="note-refactor"&gt;&lt;/span&gt;
+&lt;a href="#note-refactor" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/lynchjames/note-refactor-obsidian"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/lynchjames/note-refactor-obsidian?label=note%20refactor%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Helpful when I feel inclined to move a bunch of notes around and need to split out content.&lt;sup id="fnref:3"&gt;&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref"&gt;3&lt;/a&gt;&lt;/sup&gt; Less valuable in day-to-day operations. Another candidate for pruning soon.&lt;/p&gt;
+&lt;h3&gt;Obsidian Git&lt;span class="hx:absolute hx:-mt-20" id="obsidian-git"&gt;&lt;/span&gt;
+&lt;a href="#obsidian-git" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/denolehov/obsidian-git"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/denolehov/obsidian-git?label=obsidian%20git%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Configuring this was easy enough, but setting up git was more of a hassle. I usually do my development in Linux, so for Windows machines, I had to set up git with proper credentials to enable access to the private repo where I store my journal. Beyond that effort, I have the hostname set separately for each instance&amp;rsquo;s commit message to track where information was created.&lt;/p&gt;
+&lt;p&gt;I recommend setting it up to backup after X minutes from the last file change. The inherent delay has bitten me a few times when switching between machines where files don&amp;rsquo;t quite get synced, and I need to resolve conflicts manually.&lt;/p&gt;
+&lt;h3&gt;Periodic Notes&lt;span class="hx:absolute hx:-mt-20" id="periodic-notes"&gt;&lt;/span&gt;
+&lt;a href="#periodic-notes" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/liamcain/obsidian-periodic-notes"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/liamcain/obsidian-periodic-notes?label=periodic%20notes%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Daily notes are the backbone of my journaling experience. Matching the format of my physical bullet journal, I have tweaked many settings here and used &lt;a href="#templater"&gt;templates&lt;/a&gt; to maintain consistency. The change that most affects other plugins is my date format, &lt;code&gt;YYYY.MM.DD - ddd&lt;/code&gt;.&lt;/p&gt;
+&lt;h3&gt;Smart Typography&lt;span class="hx:absolute hx:-mt-20" id="smart-typography"&gt;&lt;/span&gt;
+&lt;a href="#smart-typography" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/mgmeyers/obsidian-smart-typography"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/mgmeyers/obsidian-smart-typography?label=smart%20typography%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Keeping my style consistent is crucial, and linting doesn&amp;rsquo;t cover all aspects of text encoding. This auto-converts punctuation and symbols to a standard type and cleans up my entries overall. Unfortunately, this does not apply retroactively to pre-existing text.&lt;/p&gt;
+&lt;h3&gt;Style Settings&lt;span class="hx:absolute hx:-mt-20" id="style-settings"&gt;&lt;/span&gt;
+&lt;a href="#style-settings" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/mgmeyers/obsidian-style-settings"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/mgmeyers/obsidian-style-settings?label=style%20settings%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Highly recommended when using the &lt;a href="#theme"&gt;Blue Topaz&lt;/a&gt; theme. I changed the default font and dataview list icons (Pacman was cute, but not what I wanted to see).&lt;/p&gt;
+&lt;h3&gt;Tasks&lt;span class="hx:absolute hx:-mt-20" id="tasks"&gt;&lt;/span&gt;
+&lt;a href="#tasks" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/obsidian-tasks-group/obsidian-tasks"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/obsidian-tasks-group/obsidian-tasks?label=tasks%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This is used on every daily/weekly/monthly file and many others in my collections. I use a global task filter of &lt;code&gt;#task&lt;/code&gt; to give the option of non-task checkboxes when I need to create an untracked checklist.&lt;/p&gt;
+&lt;h3&gt;Templater&lt;span class="hx:absolute hx:-mt-20" id="templater"&gt;&lt;/span&gt;
+&lt;a href="#templater" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://github.com/SilentVoid13/Templater"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/SilentVoid13/Templater?label=templater%20%28plugin%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Most templates that I use are for periodic notes. However, there are also some templates for correspondence tracking and one-on-one meetings. I toyed with the idea of using Obsidian to create blog entries, but directly using Hugo&amp;rsquo;s archetypes ended up being a better solution.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;Core Settings&lt;span class="hx:absolute hx:-mt-20" id="core-settings"&gt;&lt;/span&gt;
+&lt;a href="#core-settings" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;There are a few settings that I&amp;rsquo;ve changed scattered throughout the core plugins and main application. Of note, page preview is invaluable to peek at contents for reference without the need to switch between files while writing.&lt;/p&gt;
+&lt;p&gt;I also show backlinks by default to ease movement throughout the journal.&lt;/p&gt;
+&lt;p&gt;Since I am using &lt;a href="#periodic-notes"&gt;periodic notes&lt;/a&gt;, I have the &lt;code&gt;Daily notes&lt;/code&gt; core plugin disabled. I also have &lt;code&gt;Workspaces&lt;/code&gt; disabled. I found that it did not play well with &lt;a href="#obsidian-git"&gt;backups&lt;/a&gt; due to plugin version mismatches.&lt;/p&gt;
+&lt;h3&gt;Hotkeys&lt;span class="hx:absolute hx:-mt-20" id="hotkeys"&gt;&lt;/span&gt;
+&lt;a href="#hotkeys" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;I have changed the default/unset hotkeys for the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;CTRL + SHIFT + A&lt;/code&gt; &lt;em&gt;Advanced Tables: Open table controls toolbar&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CTRL + SHIFT + B&lt;/code&gt; &lt;em&gt;Backlinks: Toggle backlinks in document&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CTRL + ALT + N&lt;/code&gt; &lt;em&gt;Create note in new pane&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CTRL + SHIFT + 6&lt;/code&gt; &lt;em&gt;Footnote Shortcut: Insert and Navigate Footnote&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CTRL + &amp;lt;space&amp;gt;&lt;/code&gt; &lt;em&gt;Periodic Notes: Open daily note&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CTRL + M&lt;/code&gt; &lt;em&gt;Periodic Notes: Open monthly note&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;blank&amp;gt;&lt;/code&gt; &lt;em&gt;Periodic Notes: Open weekly note&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CTRL + Y&lt;/code&gt; &lt;em&gt;Periodic Notes: Open yearly note&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CTRL + T&lt;/code&gt; &lt;em&gt;Tasks: Create or edit task&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CTRL + ENTER&lt;/code&gt; &lt;em&gt;Tasks: Toggle task done&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CTRL + SHIFT + D&lt;/code&gt; &lt;em&gt;Templates: Insert current date&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;blank&amp;gt;&lt;/code&gt; &lt;em&gt;Toggle checkbox status&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;Theme&lt;span class="hx:absolute hx:-mt-20" id="theme"&gt;&lt;/span&gt;
+&lt;a href="#theme" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;a href="https://github.com/whyt-byte/Blue-Topaz_Obsidian-css"target="_blank" rel="noopener"&gt;&lt;img src="https://img.shields.io/github/v/release/whyt-byte/Blue-Topaz_Obsidian-css?label=blue%20topaz%20%28theme%29&amp;amp;sort=semver&amp;amp;style=for-the-badge" alt="GitHub release (latest SemVer)" loading="lazy" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I tried out a few different options in the beginning. Blue Topaz won out as it gives a nice minimal feel without being too austere. Furthermore, it plays well with my plugins and has cohesiveness for all the journal parts.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;It can take up to a minute to load the application&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;I have to remember to check for updates when switching between computers (e.g., work, personal desktop, personal laptop). Usually, when I update one, I add a &lt;a href="#tasks"&gt;task&lt;/a&gt; to touch the others.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:3"&gt;
+&lt;p&gt;This doesn&amp;rsquo;t happen much after I got everything set up in the first week or two.&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description></item></channel></rss>

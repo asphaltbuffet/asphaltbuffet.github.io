@@ -1,19 +1,90 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>Design on asphaltbuffet dev blog</title>
-    <link>https://asphaltbuffet.com/tags/design/</link>
-    <description>Recent content in Design on asphaltbuffet dev blog</description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <lastBuildDate>Tue, 28 Jun 2022 18:09:48 -0400</lastBuildDate>
-    <atom:link href="https://asphaltbuffet.com/tags/design/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Designing a Side Project: Wherehouse</title>
-      <link>https://asphaltbuffet.com/posts/2022/06/designing-a-side-project/</link>
-      <pubDate>Wed, 22 Jun 2022 00:04:30 -0400</pubDate>
-      <guid>https://asphaltbuffet.com/posts/2022/06/designing-a-side-project/</guid>
-      <description>Time for a new project. Design before development; new territory for a non-work effort&amp;hellip;</description>
-    </item>
-  </channel>
-</rss>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>asphaltbuffet dev blog – Design</title><link>https://asphaltbuffet.com/tags/design/</link><description>Recent content in Design on asphaltbuffet dev blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 22 Jun 2022 00:04:30 -0400</lastBuildDate><atom:link href="https://asphaltbuffet.com/tags/design/index.xml" rel="self" type="application/rss+xml"/><item><title>Designing a Side Project: Wherehouse</title><link>https://asphaltbuffet.com/blog/designing-a-side-project/</link><pubDate>Wed, 22 Jun 2022 00:04:30 -0400</pubDate><guid>https://asphaltbuffet.com/blog/designing-a-side-project/</guid><description>
+&lt;p&gt;Time for a new project.&lt;/p&gt;
+&lt;p&gt;The idea of an application that would help me track all my stuff has been rattling around in the
+noggin for quite a while. At one point, I&amp;rsquo;d hoped that maybe I could get Google Assistant to give
+some verbal means to tell me where I put that #2 Phillips screwdriver. A couple days of poking at
+IFTTT later&amp;hellip; idea abandoned.&lt;/p&gt;
+&lt;p&gt;But now, it came back (I still don&amp;rsquo;t know where that screwdriver is) and my thought is this would
+be a great way to expand my knowledge/practice of go, and databases, and REST and APIs and&amp;hellip; well,
+there&amp;rsquo;s a lot of things I can poke at here.&lt;/p&gt;
+&lt;h2&gt;First Steps&lt;span class="hx:absolute hx:-mt-20" id="first-steps"&gt;&lt;/span&gt;
+&lt;a href="#first-steps" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Rather than jumping right into the code, I brought up the old daily journal app (see Obsidian) and
+created a new collection (see Bullet Journaling). For the really wild part, I stopped with code once
+I had the basic core repo set up and building. Did that take half a day? Yes. Did I stop immediately
+without going any further? Mostly. I count this as a huge success though. Figuring out a better name
+after I set up the repo and now I need to do some conversion&amp;hellip; well, it was 90% success at least.&lt;/p&gt;
+&lt;h2&gt;Design&lt;span class="hx:absolute hx:-mt-20" id="design"&gt;&lt;/span&gt;
+&lt;a href="#design" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;So, back in my journal, I created a high-level summary of the project and then a page to start
+listing out my subcommands. It feels a bit like code, but the main benefit is that I&amp;rsquo;m rounding out
+&lt;strong&gt;what&lt;/strong&gt; I want this thing to look like when using it. So far, very good results. I have iterated a
+few times on how the command structure looks and had to make some decisions about what kind of
+information I would want to include. There are notes on first deliverable functionality, ideas for
+the future, and it&amp;rsquo;s saving a lot of time.&lt;/p&gt;
+&lt;p&gt;An interesting discovery after doing some of this work is that it highlights the usefulness of a
+flowchart or state diagram of some sort. A means to visualize where application flow would happen
+and help define test cases and expectations. It also feeds into user documentation nicely too.&lt;/p&gt;
+&lt;h2&gt;Output&lt;span class="hx:absolute hx:-mt-20" id="output"&gt;&lt;/span&gt;
+&lt;a href="#output" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Currently, the document looks like this:&lt;/p&gt;
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;---
+date created: Sunday, June 19th, 2022 12:09:41 pm
+date modified: Wednesday, June 22nd, 2022 12:53:45 am
+title: subcommands
+---
+# subcommands
+%%TODO: rename ‘name’ to ‘thing’%%
+## `store [name] in [location]`
+- adds item &amp;#39;name&amp;#39; into storage &amp;#39;location&amp;#39;
+## `use [name] from [location]`
+- pull item &amp;#39;name&amp;#39; out of storage &amp;#39;location&amp;#39; temporarily and track in ephemeral place while in use.
+- Intended to be relevant when calling the &amp;#39;cleanup&amp;#39; subcommand.
+## `find [name]`
+- return list of storage locations that contain an item called &amp;#39;name&amp;#39;
+## `rename [name]-[id] to [name]`
+- change the name of specific item
+- id would use a unique (but easy to input) identifier in the event multiple things have same name
+- TODO: should each item have a unique name?
+- TODO: should application tell user what the unique name is when they add something to tracking?
+## `cleanup`
+- Lists of all items that have been ‘used’ but not `put-away`
+- include storage locations to assist in returning them to right place
+## `put-away [name] (in &amp;lt;location&amp;gt;)`
+- remove item from ephemeral storage
+- adding a different location than previously recorded would be equivalent to &amp;#39;put-away&amp;#39; and &amp;#39;move&amp;#39; commands
+## `move [name] from [location] to [location]`
+- change storage location for that item
+## `remove [name] from [location]`
+- stop tracking specified item
+- TODO: does this permanently delete the item or just flag as removed?
+## `borrow [name] from [person]`
+- add item to a special location for borrowed items
+- TODO: ability to add item to a storage location?
+- TODO: is this something that should be tracked with location like other items but a flag to indicate borrowed?
+## `lend [name] to [person]`
+- take out of storage location (like use)
+- set flag that it is now loaned
+- TODO: ability to set return date?
+- TODO: autocomplete people from history?
+- TODO: add contact info for a person?
+## `return [name]`
+- functionally very similar to put away
+- removes borrow/loaned flags
+- TODO: add ability to change location here too?
+## `organize`
+- Group items (like with like) and generate report that highlights discrepancies.
+- TODO: may need some metadata to help determine which things are “alike”
+## `places`
+- list out all storage locations
+## `inventory`
+- Generate a list of all tracked items, locations, quantities, and status (loaned/borrowed)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+aria-label="Copy code"
+data-copied-label="Copied!"
+&gt;
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item></channel></rss>
